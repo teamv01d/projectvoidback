@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({
       //isteğin gönderilen bütün verileri değil DTO kısmında belirtilen verileri çekmesini sağlayan kod parçası
