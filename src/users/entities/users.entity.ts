@@ -7,31 +7,31 @@ export class Users extends Document {
   name: string;
 
   @Prop()
-  static surname: string;
+  surname: string;
 
   @Prop()
-  static email: string;
-
-  @Prop({ nullable: true })
-  static password: string;
+  email: string;
 
   @Prop()
-  static phone: string;
+  password: string;
 
   @Prop()
-  static university: string;
+  phone: string;
 
   @Prop()
-  static degree: string;
+  university: string;
 
   @Prop()
-  static city: string;
+  degree: string;
 
   @Prop()
-  static cv: string;
+  city: string;
 
   @Prop()
-  static isActive: boolean;
+  cv: string;
+
+  @Prop()
+  isActive: boolean;
 }
 
 export const UsersSchema = SchemaFactory.createForClass(Users);
