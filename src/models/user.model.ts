@@ -6,7 +6,6 @@ export class UserModel{
     password: String;
     phone: String;
     school: String;
-    university: String;
     branch: String;
     city: String;
     cv: String;
