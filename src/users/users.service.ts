@@ -47,4 +47,13 @@ export class UsersService {
       throw new NotFoundException(`User ${id} cant delete cause there is none`);
     }
   }
+
+  async findUserByEmail(email: string) {
+    try {
+      return this.usersModel.find((user: any) => user.email === email);
+    }
+    catch {
+      throw new NotFoundException(`Mail sisteme kayıtlı değil.`);
+    }
+  }
 }
