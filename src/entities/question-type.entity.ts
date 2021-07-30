@@ -7,4 +7,4 @@ export class QuestionType extends Document {
   question_type: string;
 }
 
-export const UsersSchema = SchemaFactory.createForClass(QuestionType);
+export const QuestionTypeSchema = SchemaFactory.createForClass(QuestionType);

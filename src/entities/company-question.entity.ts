@@ -21,4 +21,4 @@ export class CompanyQuestion extends Document {
   
 }
 
-export const UsersSchema = SchemaFactory.createForClass(CompanyQuestion);
+export const CompanyQuestionSchema = SchemaFactory.createForClass(CompanyQuestion);

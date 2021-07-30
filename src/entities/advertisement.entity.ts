@@ -26,4 +26,4 @@ export class Advertisement extends Document {
   advertisement_type: string;
 }
 
-export const UsersSchema = SchemaFactory.createForClass(Advertisement);
+export const AdvertisementSchema = SchemaFactory.createForClass(Advertisement);

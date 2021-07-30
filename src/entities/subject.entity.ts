@@ -7,4 +7,4 @@ export class SubjectClass extends Document {
   subject: string;
 }
 
-export const UsersSchema = SchemaFactory.createForClass(SubjectClass);
+export const SubjectSchema = SchemaFactory.createForClass(SubjectClass);

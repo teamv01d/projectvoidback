@@ -16,4 +16,4 @@ export class AptitudeTestAnswer extends Document {
 
 }
 
-export const UsersSchema = SchemaFactory.createForClass(AptitudeTestAnswer);
+export const AptitudeTestAnswerSchema = SchemaFactory.createForClass(AptitudeTestAnswer);
