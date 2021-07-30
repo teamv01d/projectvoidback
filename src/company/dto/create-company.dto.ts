@@ -3,10 +3,7 @@ import { IsEmail, IsString } from 'class-validator';
 
 export class CreateCompanyDto {
   @IsString()
-  readonly name: string;
-
-  @IsString()
-  readonly surname: string;
+  readonly company_name: string;
 
   @IsEmail()
   readonly email: string;
