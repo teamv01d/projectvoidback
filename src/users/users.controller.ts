@@ -1,5 +1,16 @@
-import { Delete } from '@nestjs/common';
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Delete,
+  Patch,
+  Request,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthService } from 'src/auth/auth.service';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
@@ -8,8 +19,22 @@ import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService,
+  private readonly authService:AuthService) { }
 
+  //register için kullanımda
+  @Post('register')
+  register(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
+  }
+  
+  //sign in için kullanımda
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  signIn(@Request() req): any {
+    return req.user;
+  }
+  
   @Get()
   findAll() {
     return this.usersService.findAll();
@@ -18,11 +43,6 @@ export class UsersController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
-  }
-
-  @Post()
-  create(@Body() createUserDto: CreateUserDto): Promise<CreateUserDto> {
-    return this.usersService.create(createUserDto);
   }
 
   @Patch(':id')
