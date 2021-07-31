@@ -3,7 +3,8 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class Company extends Document {
-  @Prop()
+  
+  @Prop({ default: null})
   company_name: string;
 
   @Prop()
@@ -12,13 +13,13 @@ export class Company extends Document {
   @Prop()
   password: string;
 
-  @Prop()
+  @Prop({ default: null})
   about: string;
 
-  @Prop()
+  @Prop({ default: null })
   web_address: string;
 
-  @Prop()
+  @Prop({ default: true })
   isActive: boolean;
 }
 

@@ -7,23 +7,23 @@ export class Advertisement extends Document {
   @Prop()
   companyID: Company;
 
-  @Prop()
+  @Prop({ default: null })
   advertisement_name: string;
 
-  @Prop()
+  @Prop({ default: null })
   explanation: string;
 
-  @Prop()
-  start_date: string;
+  @Prop({ default: new Date()})
+  start_date: Date;
 
-  @Prop()
-  end_date: string;
+  @Prop({ default: new Date()})
+  end_date: Date;
 
-  @Prop()
+  @Prop({ default: null })
   city: string;
 
   @Prop()
-  advertisement_type: string;
+  advertisement_type: boolean;
 }
 
 export const AdvertisementSchema = SchemaFactory.createForClass(Advertisement);
