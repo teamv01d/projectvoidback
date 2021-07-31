@@ -3,8 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Users } from './entities/users.entity';
-
+import { Users } from '../entities/users.entity';
 
 @Injectable()
 export class UsersService {
@@ -12,7 +11,15 @@ export class UsersService {
     @InjectModel(Users.name) private readonly usersModel: Model<Users>,
   ) {}
 
-  async findOne(email: string): Promise<Users | undefined> {
+  async findUserByEmail2(email: string): Promise<Users> {
+    try {
+      return this.usersModel.findOne({ email });
+    } catch {
+      throw new NotFoundException(`Mail sisteme kayıtlı değil.`);
+    }
+  }
+
+  async findUserByEmail(email: string): Promise<Users | undefined> {
     return this.usersModel.findOne({ email });
   }
 
@@ -20,28 +27,27 @@ export class UsersService {
     return this.usersModel.find().exec();
   }
 
-  // async findOne(id: string): Promise<Users[]> {
-  //   const user = await this.usersModel.find({ _id: id }).exec();
-  //   if (!user) {
-  //     throw new NotFoundException(`User ${id} not found`);
-  //   }
-  //   return user;
-  // }
+  async findOne(id: string): Promise<Users[]> {
+    const user = await this.usersModel.find({ _id: id }).exec();
+    if (!user) {
+      throw new NotFoundException(`User ${id} not found`);
+    }
+    return user;
+  }
 
   create(createUserDTO: CreateUserDto): Promise<Users> {
     const user = new this.usersModel(createUserDTO);
     return user.save();
   }
 
-  async update(id: string, updateUserDTO: UpdateUserDto): Promise<Users> {
-    const existingUser = await this.usersModel
-      .findOneAndUpdate({ _id: id }, { $set: updateUserDTO }, { new: true })
+  async updateProfile(id: string, updateUserDto: UpdateUserDto,): Promise<Users | undefined> {
+    const exUser = await this.usersModel
+      .findOneAndUpdate({ _id: id }, { $set: updateUserDto }, { new: true })
       .exec();
-
-    if (!existingUser) {
-      throw new NotFoundException(`user ${id} not found dude`);
+    if (!exUser) {
+      throw new NotFoundException(`not found`);
     }
-    return existingUser;
+    return exUser;
   }
 
   async delete(id: string): Promise<Users> {
@@ -50,14 +56,6 @@ export class UsersService {
       return user.deleteOne();
     } catch (error) {
       throw new NotFoundException(`User ${id} cant delete cause there is none`);
-    }
-  }
-
-  async findUserByEmail(email: string): Promise<Users> {
-    try {
-      return this.usersModel.findOne((user: any) => user.email === email);
-    } catch {
-      throw new NotFoundException(`Mail sisteme kayıtlı değil.`);
     }
   }
 }
