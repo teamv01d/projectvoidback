@@ -25,7 +25,7 @@ export class AdvertisementService {
   }
 
   create(createAdvertisementDTO: CreateAdvertisementDto): Promise<Advertisement> {
-    const company = new Company();
+    //const company = new Company();
     //company.email="email";
     //company.company_name="company_name";
     //company.about="about";
