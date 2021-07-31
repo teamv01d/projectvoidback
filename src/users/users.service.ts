@@ -11,14 +11,6 @@ export class UsersService {
     @InjectModel(Users.name) private readonly usersModel: Model<Users>,
   ) {}
 
-  async findUserByEmail2(email: string): Promise<Users> {
-    try {
-      return this.usersModel.findOne({ email });
-    } catch {
-      throw new NotFoundException(`Mail sisteme kayıtlı değil.`);
-    }
-  }
-
   async findUserByEmail(email: string): Promise<Users | undefined> {
     return this.usersModel.findOne({ email });
   }
