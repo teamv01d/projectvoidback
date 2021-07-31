@@ -18,4 +18,4 @@ export class Company extends Document {
   score: number;
 }
 
-export const UsersSchema = SchemaFactory.createForClass(Company);
+export const ApplicantSchema = SchemaFactory.createForClass(Company);

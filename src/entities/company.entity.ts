@@ -22,4 +22,4 @@ export class Company extends Document {
   isActive: boolean;
 }
 
-export const UsersSchema = SchemaFactory.createForClass(Company);
+export const CompanySchema = SchemaFactory.createForClass(Company);
