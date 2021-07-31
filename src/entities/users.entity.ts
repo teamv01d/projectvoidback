@@ -15,23 +15,25 @@ export class Users extends Document {
   @Prop()
   password: string;
 
-  @Prop()
-  phone: string;
+  @Prop({ default: null })
+  birthdate: string;
 
-  @Prop()
-  university: string;
-
-  @Prop()
-  degree: string;
-
-  @Prop()
+  @Prop({ default: null })
   city: string;
 
-  @Prop()
+  @Prop({ default: null })
+  about: string;
+
+  @Prop({ default: null })
+  university: string;
+
+  @Prop({ default: null })
+  faculty: string;
+
+  @Prop({ default: null })
+  phone: string;
+
+  @Prop({ default: null })
   cv: string;
-
-  @Prop()
-  isActive: boolean;
 }
-
 export const UsersSchema = SchemaFactory.createForClass(Users);
