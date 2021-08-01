@@ -10,7 +10,7 @@ export class AuthServiceCompany {
     const company = await this.companyService.findOne(email);
     if (company && company.password === pass) {
       //const { password, ...result } = user;
-      return company.id;
+      return company.company_id;
     }
     return null;
   }

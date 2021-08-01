@@ -1,9 +1,10 @@
 import { IsBoolean, IsDate, IsEmail, IsOptional, IsString } from 'class-validator';
-import { Company } from 'src/entities/company.entity';
+import { CompanyModel } from 'src/entities/company.entity';
 
 export class CreateAdvertisementDto {
-
-  
+ 
+  @IsOptional()
+  readonly companyID: CompanyModel;
 
   @IsString()
   @IsOptional()

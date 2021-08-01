@@ -1,29 +1,29 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { Company } from './company.entity';
+import { Document, mongo, Mongoose } from 'mongoose';
+import * as mongoose from "mongoose";
+import { CompanyModel } from './company.entity';
 
-@Schema()
-export class Advertisement extends Document {
-  @Prop()
-  companyID: Company;
+export class AdvertisementModel{
 
-  @Prop({ default: null })
+  advertisement_id: string;
+  companyID: CompanyModel;
   advertisement_name: string;
-
-  @Prop({ default: null })
   explanation: string;
-
-  @Prop({ default: new Date()})
   start_date: Date;
-
-  @Prop({ default: new Date()})
   end_date: Date;
-
-  @Prop({ default: null })
   city: string;
-
-  @Prop()
   advertisement_type: boolean;
+
 }
 
-export const AdvertisementSchema = SchemaFactory.createForClass(Advertisement);
+export const AdvertisementSchema = new mongoose.Schema({
+
+  companyID: Object,
+  advertisement_name: String,
+  explanation: String,
+  start_date: Date,
+  end_date: Date,
+  city: String,
+  advertisement_type: Boolean
+
+});

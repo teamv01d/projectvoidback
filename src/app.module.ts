@@ -16,7 +16,7 @@ import { AdvertisementModule } from './advertisement/advertisement.module';
     AdvertisementModule,
     MongooseModule.forRoot(environment.mongoUrl),
   ],
-  controllers: [AdvertisementController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}

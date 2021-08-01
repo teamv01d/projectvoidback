@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Advertisement } from './advertisement.entity';
+import { AdvertisementModel } from './advertisement.entity';
 
 @Schema()
 export class AdvertisementQuestion extends Document {
   @Prop()
-  advertisementID: Advertisement;
+  advertisementID: AdvertisementModel;
 
   @Prop()
   questionID: string;

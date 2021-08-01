@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Advertisement } from './advertisement.entity';
+import { AdvertisementModel } from './advertisement.entity';
 import { Users } from './users.entity';
 
 @Schema()
@@ -12,7 +12,7 @@ export class Company extends Document {
   companyID: Company;
 
   @Prop()
-  advertisement: Advertisement;
+  advertisement: AdvertisementModel;
 
   @Prop()
   score: number;
