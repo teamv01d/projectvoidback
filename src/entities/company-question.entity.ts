@@ -1,21 +1,18 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Advertisement } from './advertisement.entity';
-import { QuestionType } from './question-type.entity';
-import { SubjectClass } from './subject.entity';
 
 @Schema()
 export class CompanyQuestion extends Document {
-  @Prop()
-  advertisementID: Advertisement;
+  @Prop({ default: null })
+  advertisementID: string;
 
-  @Prop()
-  subjectID: SubjectClass;
+  @Prop({ default: null })
+  subjectID: string;
 
-  @Prop()
-  question_typeID: QuestionType;
+  @Prop({ default: null })
+  question_typeID: string;
 
-  @Prop()
+  @Prop({ default: null })
   question: string;
 
   

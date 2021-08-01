@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class SubjectClass extends Document {
-  @Prop()
+  @Prop({ default: null })
   subject: string;
 }
 

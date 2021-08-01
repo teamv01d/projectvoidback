@@ -1,21 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Advertisement } from './advertisement.entity';
-import { Users } from './users.entity';
 
 @Schema()
-export class Company extends Document {
-  @Prop()
-  userID: Users;
+export class Applicant extends Document {
+  @Prop({ default: null })
+  userID: string;
 
-  @Prop()
-  companyID: Company;
+  @Prop({ default: null })
+  companyID: string;
 
-  @Prop()
-  advertisement: Advertisement;
+  @Prop({ default: null })
+  advertisement: string;
 
-  @Prop()
+  @Prop({ default: null })
   score: number;
 }
 
-export const ApplicantSchema = SchemaFactory.createForClass(Company);
+export const ApplicantSchema = SchemaFactory.createForClass(Applicant);

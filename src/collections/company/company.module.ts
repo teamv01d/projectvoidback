@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AuthServiceCompany } from 'src/auth-company/auth.service';
-import { Company, CompanySchema } from '../entities/company.entity';
+import { AuthServiceCompany } from 'src/auth-folder/auth-company/auth.service';
+import { Company, CompanySchema } from 'src/entities/company.entity';
 import { CompanyController } from './company.controller';
 import { CompanyService } from './company.service';
 
@@ -17,6 +17,6 @@ import { CompanyService } from './company.service';
   ],
   controllers: [CompanyController],
   providers: [CompanyService,AuthServiceCompany],
-  exports: [CompanyService]
+
 })
 export class CompanyModule {}

@@ -1,16 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { CompanyQuestion } from './company-question.entity';
 
 @Schema()
 export class Users extends Document {
-  @Prop()
-  company_questionID: CompanyQuestion;
+  @Prop({ default: null })
+  company_questionID: string;
 
-  @Prop()
+  @Prop({ default: null })
   selection: string;
 
-  @Prop()
+  @Prop({ default: null })
   answer: string;
 
 }

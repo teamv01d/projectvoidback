@@ -3,8 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
-import { Company } from '../entities/company.entity';
-
+import { Company } from '../../entities/company.entity';
 
 @Injectable()
 export class CompanyService {
@@ -13,7 +12,7 @@ export class CompanyService {
   ) {}
 
   async findOne(email: string): Promise<Company | undefined> {
-    return this.companyModel.findOne({ email });
+    return this.companyModel.findOne({ email }).exec();
   }
 
   findAll(): Promise<Company[]> {
