@@ -12,8 +12,6 @@ export class AptitudeTestAnswer extends Document {
 
   @Prop()
   answer: string;
-
-
 }
 
 export const AptitudeTestAnswerSchema = SchemaFactory.createForClass(AptitudeTestAnswer);

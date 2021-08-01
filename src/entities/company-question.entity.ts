@@ -17,8 +17,6 @@ export class CompanyQuestion extends Document {
 
   @Prop()
   question: string;
-
-  
 }
 
 export const CompanyQuestionSchema = SchemaFactory.createForClass(CompanyQuestion);

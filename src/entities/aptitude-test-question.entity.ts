@@ -5,7 +5,6 @@ import { SubjectClass } from './subject.entity';
 
 @Schema()
 export class AptitudeTestQuestion extends Document {
-
   @Prop()
   subjectID: SubjectClass;
 
@@ -13,9 +12,8 @@ export class AptitudeTestQuestion extends Document {
   question_type: QuestionType;
 
   @Prop()
-  
   question: string;
-
 }
 
-export const AptitudeTestQuestionSchema = SchemaFactory.createForClass(AptitudeTestQuestion);
+export const AptitudeTestQuestionSchema =
+  SchemaFactory.createForClass(AptitudeTestQuestion);

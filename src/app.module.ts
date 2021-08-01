@@ -2,16 +2,15 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import environment from './env/environment';
 import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
-import { CompanyController } from './company/company.controller';
 import { CompanyModule } from './company/company.module';
+import { AptitudeTestModule } from './aptitude-test/aptitude-test.module';
 
 @Module({
   imports: [
+    MongooseModule.forRoot(environment.mongoUrl),
     UsersModule,
     CompanyModule,
-    AuthModule,
-    MongooseModule.forRoot(environment.mongoUrl),
+    AptitudeTestModule,
   ],
   controllers: [],
   providers: [],

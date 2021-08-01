@@ -12,7 +12,6 @@ export class AdvertisementQuestion extends Document {
 
   @Prop()
   company_questionID: string;
-
 }
 
 export const AdvertisementQuestionSchema = SchemaFactory.createForClass(AdvertisementQuestion);
