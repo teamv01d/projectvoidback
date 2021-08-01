@@ -3,21 +3,19 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
-import { CompanyModel } from '../entities/company.entity';
-
-const result: CompanyModel[]=[];
+import { Company } from '../../entities/company.entity';
 
 @Injectable()
 export class CompanyService {
   constructor(
-    @InjectModel('Company') private readonly companyModel: Model<CompanyModel>,
+    @InjectModel(Company.name) private readonly companyModel: Model<Company>,
   ) {}
 
-  async findOne(email: string): Promise<CompanyModel | undefined> {
+  async findOne(email: string): Promise<Company | undefined> {
     return this.companyModel.findOne({ email }).exec();
   }
 
-  findAll(): Promise<CompanyModel[]> {
+  findAll(): Promise<Company[]> {
     return this.companyModel.find().exec();
   }
 
@@ -29,12 +27,12 @@ export class CompanyService {
   //   return user;
   // }
 
-  create(createCompanyDTO: CreateCompanyDto): Promise<CompanyModel> {
+  create(createCompanyDTO: CreateCompanyDto): Promise<Company> {
     const company = new this.companyModel(createCompanyDTO);
     return company.save();
   }
 
-  async update(id: string, updateCompanyDTO: UpdateCompanyDto): Promise<CompanyModel> {
+  async update(id: string, updateCompanyDTO: UpdateCompanyDto): Promise<Company> {
     const existingCompany = await this.companyModel
       .findOneAndUpdate({ _id: id }, { $set: updateCompanyDTO }, { new: true })
       .exec();
@@ -45,7 +43,7 @@ export class CompanyService {
     return existingCompany;
   }
 
-  async delete(id: string): Promise<CompanyModel> {
+  async delete(id: string): Promise<Company> {
     try {
       const company = await this.companyModel.findOne({ _id: id });
       return company.deleteOne();
@@ -54,7 +52,7 @@ export class CompanyService {
     }
   }
 
-  async findUserByEmail(email: string): Promise<CompanyModel> {
+  async findUserByEmail(email: string): Promise<Company> {
     try {
       return this.companyModel.findOne((company: any) => company.email === email);
     } catch {

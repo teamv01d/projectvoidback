@@ -1,23 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { AdvertisementModel } from 'src/entities/advertisement.entity';
-import { CompanyModel } from 'src/entities/company.entity';
+import { Advertisement } from 'src/entities/advertisement.entity';
 import { CreateAdvertisementDto } from './dto/create-advertisement.dto';
 import { UpdateAdvertisementDto } from './dto/update-advertisement.dto';
 
-const result: AdvertisementModel[] = [];
 @Injectable()
 export class AdvertisementService {
   constructor(
-    @InjectModel("Advertisement") private readonly advertisementModel: Model<AdvertisementModel>,
+    @InjectModel(Advertisement.name) private readonly advertisementModel: Model<Advertisement>,
   ) {}
 
-  findAll(): Promise<AdvertisementModel[]> {
+  findAll(): Promise<Advertisement[]> {
     return this.advertisementModel.find().exec();
   }
 
-  async findOne(id: string): Promise<AdvertisementModel[]> {
+  async findOne(id: string): Promise<Advertisement[]> {
     const advertisement = await this.advertisementModel.find({ _id: id }).exec();
     if (!advertisement) {
       throw new NotFoundException(`Advertisement ${id} not found`);
@@ -25,15 +23,12 @@ export class AdvertisementService {
     return advertisement;
   }
 
-  async create(createAdvertisementDTO: CreateAdvertisementDto): Promise<AdvertisementModel> {
-    const company = new CompanyModel();
-    company.company_id="sasafdbf";
-
-   const createadvertisement = new this.advertisementModel({...createAdvertisementDTO,...company}); 
+  async create(createAdvertisementDTO: CreateAdvertisementDto): Promise<Advertisement> {
+   const createadvertisement = new this.advertisementModel(createAdvertisementDTO); 
     return await createadvertisement.save();
   }
 
-  async updateAdvertisement(id: string, updateUserDto: UpdateAdvertisementDto,): Promise<AdvertisementModel | undefined> {
+  async updateAdvertisement(id: string, updateUserDto: UpdateAdvertisementDto,): Promise<Advertisement | undefined> {
     const exAdvertisement = await this.advertisementModel
       .findOneAndUpdate({ _id: id }, { $set: UpdateAdvertisementDto }, { new: true })
       .exec();
@@ -43,7 +38,7 @@ export class AdvertisementService {
     return exAdvertisement;
   }
 
-  async delete(id: string): Promise<AdvertisementModel> {
+  async delete(id: string): Promise<Advertisement> {
     try {
       const advertisement = await this.advertisementModel.findOne({ _id: id });
       return advertisement.deleteOne();

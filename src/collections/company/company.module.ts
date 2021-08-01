@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AuthServiceCompany } from 'src/auth-company/auth.service';
-import { CompanySchema } from 'src/entities/company.entity';
+import { AuthServiceCompany } from 'src/auth-folder/auth-company/auth.service';
+import { Company, CompanySchema } from 'src/entities/company.entity';
 import { CompanyController } from './company.controller';
 import { CompanyService } from './company.service';
 
@@ -10,7 +10,7 @@ import { CompanyService } from './company.service';
 
     MongooseModule.forFeature([
       {
-        name: 'Company',
+        name: Company.name,
         schema: CompanySchema,
       }
     ])

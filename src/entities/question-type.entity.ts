@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class QuestionType extends Document {
-  @Prop()
+  @Prop({ default: null })
   question_type: string;
 }
 

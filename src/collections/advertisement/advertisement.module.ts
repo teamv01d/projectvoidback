@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AdvertisementModel, AdvertisementSchema } from '../entities/advertisement.entity';
+import { Advertisement, AdvertisementSchema } from 'src/entities/advertisement.entity';
 import { AdvertisementController } from './advertisement.controller';
 import { AdvertisementService } from './advertisement.service';
 
@@ -9,7 +9,7 @@ import { AdvertisementService } from './advertisement.service';
 
     MongooseModule.forFeature([
       {
-        name: 'Advertisement',
+        name: Advertisement.name,
         schema: AdvertisementSchema,
       }
     ])

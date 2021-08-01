@@ -1,16 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { AptitudeTestQuestion } from './aptitude-test-question.entity';
 
 @Schema()
 export class AptitudeTestAnswer extends Document {
-  @Prop()
-  questionID: AptitudeTestQuestion;
+  @Prop({ default: true })
+  questionID: string;
 
-  @Prop()
+  @Prop({ default: true })
   selection: string;
 
-  @Prop()
+  @Prop({ default: true })
   answer: string;
 
 
