@@ -1,15 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CompanyService } from 'src/collections/company/company.service';
-import { UsersService } from 'src/collections/users/users.service';
-
 @Injectable()
 export class AuthServiceCompany {
   constructor(private companyService: CompanyService) {}
 
-  async validateUser(email: string, pass: string): Promise<any> {
-    const company = await this.companyService.findOne(email);
+  async validateCompany(email: string, pass: string): Promise<any> {
+    const company = await this.companyService.findCompanyByEmail(email);
     if (company && company.password === pass) {
-      //const { password, ...result } = user;
+      //const { password, ...result } = company;
       return company;
     }
     return null;

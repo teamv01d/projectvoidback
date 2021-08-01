@@ -7,7 +7,6 @@ import { UsersService } from './users.service';
 
 @Module({
   imports: [
-
     MongooseModule.forFeature([
       {
         name: Users.name,

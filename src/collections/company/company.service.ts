@@ -11,28 +11,31 @@ export class CompanyService {
     @InjectModel(Company.name) private readonly companyModel: Model<Company>,
   ) {}
 
-  async findOne(email: string): Promise<Company | undefined> {
-    return this.companyModel.findOne({ email }).exec();
+  async findCompanyByEmail(email: string): Promise<Company | undefined> {
+    return this.companyModel.findOne({ email });
   }
 
   findAll(): Promise<Company[]> {
     return this.companyModel.find().exec();
   }
 
-  // async findOne(id: string): Promise<Users[]> {
-  //   const user = await this.usersModel.find({ _id: id }).exec();
-  //   if (!user) {
-  //     throw new NotFoundException(`User ${id} not found`);
-  //   }
-  //   return user;
-  // }
+  async findOne(id: string): Promise<Company[]> {
+    const company = await this.companyModel.find({ _id: id }).exec();
+    if (!company) {
+      throw new NotFoundException(`Company ${id} not found`);
+    }
+    return company;
+  }
 
   create(createCompanyDTO: CreateCompanyDto): Promise<Company> {
     const company = new this.companyModel(createCompanyDTO);
     return company.save();
   }
 
-  async update(id: string, updateCompanyDTO: UpdateCompanyDto): Promise<Company> {
+  async update(
+    id: string,
+    updateCompanyDTO: UpdateCompanyDto,
+  ): Promise<Company> {
     const existingCompany = await this.companyModel
       .findOneAndUpdate({ _id: id }, { $set: updateCompanyDTO }, { new: true })
       .exec();
@@ -49,14 +52,6 @@ export class CompanyService {
       return company.deleteOne();
     } catch (error) {
       throw new NotFoundException(`User ${id} cant delete cause there is none`);
-    }
-  }
-
-  async findUserByEmail(email: string): Promise<Company> {
-    try {
-      return this.companyModel.findOne((company: any) => company.email === email);
-    } catch {
-      throw new NotFoundException(`Mail sisteme kayıtlı değil.`);
     }
   }
 }

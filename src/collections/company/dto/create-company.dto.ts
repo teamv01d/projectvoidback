@@ -1,4 +1,4 @@
-import { IsBoolean, IsEmail, IsString } from 'class-validator';
+import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator';
 
 
 export class CreateCompanyDto {
@@ -12,11 +12,14 @@ export class CreateCompanyDto {
   readonly password: string;
 
   @IsString()
+  @IsOptional()
   readonly about: string;
 
   @IsString()
+  @IsOptional()
   readonly web_address: string;
 
   @IsBoolean()
+  @IsOptional()
   readonly isActive: boolean;
 }
