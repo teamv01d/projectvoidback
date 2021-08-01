@@ -14,10 +14,10 @@ export class Advertisement extends Document{
   @Prop({ default: null })
   explanation: string;
 
-  @Prop({ default: null })
+  @Prop({ default: new Date() })
   start_date: Date;
 
-  @Prop({ default: null })
+  @Prop({ default: new Date() })
   end_date: Date;
 
   @Prop({ default: null })

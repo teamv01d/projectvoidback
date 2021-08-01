@@ -3,13 +3,13 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class AptitudeTestAnswer extends Document {
-  @Prop({ default: true })
+  @Prop({ default: null })
   questionID: string;
 
-  @Prop({ default: true })
+  @Prop({ default: null })
   selection: string;
 
-  @Prop({ default: true })
+  @Prop({ default: null })
   answer: string;
 
 
