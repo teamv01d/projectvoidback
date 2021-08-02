@@ -19,12 +19,8 @@ export class CompanyService {
     return this.companyModel.find().exec();
   }
 
-  async findOne(id: string): Promise<Company[]> {
-    const company = await this.companyModel.find({ _id: id }).exec();
-    if (!company) {
-      throw new NotFoundException(`Company ${id} not found`);
-    }
-    return company;
+  async findOne(data: any): Promise<Company> {
+    return this.companyModel.findOne(data);
   }
 
   create(createCompanyDTO: CreateCompanyDto): Promise<Company> {

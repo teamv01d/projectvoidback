@@ -8,6 +8,7 @@ import {
     Request,
     Param,
     UseGuards,
+    BadRequestException,
   } from '@nestjs/common';
   import { AuthServiceCompany } from 'src/auth-folder/auth-company/auth.service';
   import { LocalAuthGuard } from 'src/auth-folder/auth-company/local-auth.guard';
@@ -29,10 +30,15 @@ import {
     }
     
     //sign in için kullanımda
-    @UseGuards(LocalAuthGuard)
     @Post('companylogin')
-    signIn(@Request() req): any {
-      return req.company;
+    async login(@Body('email') email: string, @Body('password') password: string){
+      const company = await this.companyService.findOne({email});
+
+      if(!company){
+        throw new BadRequestException('invalid credentials');
+      }
+
+      return company;
     }
     
     @Get()
