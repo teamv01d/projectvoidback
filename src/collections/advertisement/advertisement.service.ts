@@ -15,12 +15,8 @@ export class AdvertisementService {
     return this.advertisementModel.find().exec();
   }
 
-  async findOne(id: string): Promise<Advertisement[]> {
-    const advertisement = await this.advertisementModel.find({ _id: id }).exec();
-    if (!advertisement) {
-      throw new NotFoundException(`Advertisement ${id} not found`);
-    }
-    return advertisement;
+  async findOne(data: any): Promise<Advertisement> {
+    return this.advertisementModel.findOne(data);
   }
 
   async create(createAdvertisementDTO: CreateAdvertisementDto): Promise<Advertisement> {

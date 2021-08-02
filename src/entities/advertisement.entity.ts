@@ -15,10 +15,10 @@ export class Advertisement extends Document{
   explanation: string;
 
   @Prop({ default: new Date() })
-  start_date: Date;
+  start_date: string;
 
   @Prop({ default: new Date() })
-  end_date: Date;
+  end_date: string;
 
   @Prop({ default: null })
   city: string;
