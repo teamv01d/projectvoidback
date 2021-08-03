@@ -4,6 +4,12 @@ import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Users } from '../../entities/users.entity';
+import environment from 'src/env/environment';
+
+const bcrypt = require('bcrypt');
+
+const saltRounds = 10;
+const hashtext = environment.hashText;
 
 @Injectable()
 export class UsersService {
@@ -32,14 +38,30 @@ export class UsersService {
     return user.save();
   }
 
-  async updateProfile(id: string, updateUserDto: UpdateUserDto,): Promise<Users | undefined> {
-    const exUser = await this.usersModel
-      .findOneAndUpdate({ _id: id }, { $set: updateUserDto }, { new: true })
-      .exec();
-    if (!exUser) {
-      throw new NotFoundException(`not found`);
-    }
-    return exUser;
+  // async updateProfile(
+  //   id: string,
+  //   updateUserDto: UpdateUserDto,
+  // ): Promise<Users | undefined> {
+  //   const exUser = await this.usersModel
+  //     .findByIdAndUpdate(id, { $set: updateUserDto }, { new: true })
+  //     .exec();
+  //   if (!exUser) {
+  //     throw new NotFoundException(`not found`);
+  //   }
+  //   return exUser;
+  // }
+
+  async convertToHash(value: string) {
+    let hashPwd;
+    await bcrypt.hash(`${hashtext}${value}`, saltRounds).then((hash) => {
+      hashPwd = hash;
+    });
+    return await hashPwd;
+  }
+
+  async compareHashes(password, hashed) {
+    const match = await bcrypt.compareSync(`${hashtext}${password}`, hashed);
+    return await match;
   }
 
   async delete(id: string): Promise<Users> {

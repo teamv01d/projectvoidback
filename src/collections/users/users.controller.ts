@@ -4,37 +4,42 @@ import {
   Get,
   Post,
   Delete,
-  Patch,
   Request,
   Param,
-  UseGuards,
 } from '@nestjs/common';
-import { AuthService } from 'src/auth-folder/auth/auth.service';
-import { LocalAuthGuard } from 'src/auth-folder/auth/local-auth.guard';
+import { Users } from 'src/entities/users.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { LoginService } from './login/user-login.service';
 import { UsersService } from './users.service';
 
 //return yanında kullanılması gereken tırnak işareti `
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService,
-  private readonly authService:AuthService) { }
+  constructor(
+    private readonly usersService: UsersService,
+    private loginService: LoginService,
+  ) {}
 
   //register için kullanımda
   @Post('register')
-  register(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async register(@Body() body: CreateUserDto) {
+    body.password = await this.usersService.convertToHash(body.password);
+    return this.usersService.create(body);
   }
-  
+
   //sign in için kullanımda
-  @UseGuards(LocalAuthGuard)
   @Post('login')
-  signIn(@Request() req): any {
-    return req.user;
+  async createUser(@Body() body): Promise<Users[]> {
+    return await this.loginService.loginUser(body);
   }
-  
+
+  // @Post('login')
+  // signIn(@Request() req): any {
+  //   return req.user;
+  // }
+
   @Get()
   findAll() {
     return this.usersService.findAll();
@@ -45,10 +50,15 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
-  @Patch(':id')
-  updateProfile(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.updateProfile(id, updateUserDto);
-  }
+  // @Post(':id')
+  // postProfile(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  //   return this.usersService.postProfile(id, updateUserDto);
+  // }
+
+  // @Put(':id')
+  // updateProfile(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  //   return this.usersService.updateProfile(id, updateUserDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
