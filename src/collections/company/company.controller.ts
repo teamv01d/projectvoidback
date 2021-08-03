@@ -5,12 +5,9 @@ import {
     Post,
     Delete,
     Patch,
-    Request,
     Param,
-    UseGuards,
+    BadRequestException,
   } from '@nestjs/common';
-  import { AuthServiceCompany } from 'src/auth-folder/auth-company/auth.service';
-  import { LocalAuthGuard } from 'src/auth-folder/auth-company/local-auth.guard';
   import { CreateCompanyDto } from './dto/create-company.dto';
   import { UpdateCompanyDto } from './dto/update-company.dto';
   import { CompanyService } from './company.service';
@@ -19,8 +16,7 @@ import {
   
   @Controller('company')
   export class CompanyController {
-    constructor(private readonly companyService: CompanyService,
-    private readonly authService:AuthServiceCompany) { }
+    constructor(private readonly companyService: CompanyService) { }
   
     //register için kullanımda
     @Post('companyregister')
@@ -29,10 +25,15 @@ import {
     }
     
     //sign in için kullanımda
-    @UseGuards(LocalAuthGuard)
     @Post('companylogin')
-    signIn(@Request() req): any {
-      return req.company;
+    async login(@Body('email') email: string, @Body('password') password: string){
+      const company = await this.companyService.findOne({email});
+
+      if(!company){
+        throw new BadRequestException('invalid credentials');
+      }
+
+      return company;
     }
     
     @Get()
@@ -42,7 +43,7 @@ import {
   
     @Get(':id')
     findOne(@Param('id') id: string) {
-      return this.companyService.findOne(id);
+      return this.companyService.findOne2(id);
     }
   
     @Patch(':id')

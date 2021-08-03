@@ -10,6 +10,7 @@ import {
   import { CreateAdvertisementDto } from './dto/create-advertisement.dto';
   import { UpdateAdvertisementDto } from './dto/update-advertisement.dto';
   import { AdvertisementService } from './advertisement.service';
+import { CompanyService } from '../company/company.service';
   
   //return yanında kullanılması gereken tırnak işareti `
   

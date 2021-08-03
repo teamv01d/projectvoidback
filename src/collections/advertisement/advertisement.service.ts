@@ -28,9 +28,9 @@ export class AdvertisementService {
     return await createadvertisement.save();
   }
 
-  async updateAdvertisement(id: string, updateUserDto: UpdateAdvertisementDto,): Promise<Advertisement | undefined> {
+  async updateAdvertisement(id: string, updateAdvertisementDto: UpdateAdvertisementDto,): Promise<Advertisement | undefined> {
     const exAdvertisement = await this.advertisementModel
-      .findOneAndUpdate({ _id: id }, { $set: UpdateAdvertisementDto }, { new: true })
+      .findOneAndUpdate({ _id: id }, { $set: updateAdvertisementDto }, { new: true })
       .exec();
     if (!exAdvertisement) {
       throw new NotFoundException(`not found`);

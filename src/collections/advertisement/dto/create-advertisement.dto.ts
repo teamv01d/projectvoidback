@@ -14,13 +14,13 @@ export class CreateAdvertisementDto {
   @IsOptional()
   readonly explanation: string;
 
-  @IsDate()
+  @IsString()
   @IsOptional()
-  readonly start_date: Date;
+  readonly start_date: string;
 
-  @IsDate()
+  @IsString()
   @IsOptional()
-  readonly end_date: Date;
+  readonly end_date: string;
 
   @IsString()
   @IsOptional()
