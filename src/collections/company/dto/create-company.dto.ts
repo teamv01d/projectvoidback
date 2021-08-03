@@ -9,7 +9,7 @@ export class CreateCompanyDto {
   readonly email: string;
 
   @IsString()
-  readonly password: string;
+   password: string;
 
   @IsString()
   @IsOptional()

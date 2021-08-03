@@ -7,7 +7,6 @@ import { Users } from '../../entities/users.entity';
 import environment from 'src/env/environment';
 
 const bcrypt = require('bcrypt');
-
 const saltRounds = 10;
 const hashtext = environment.hashText;
 
