@@ -45,7 +45,7 @@ export class CompanyService {
       .exec();
 
     if (!existingCompany) {
-      throw new NotFoundException(`user ${id} not found dude`);
+      throw new NotFoundException(`Company ${id} not found dude`);
     }
     return existingCompany;
   }
@@ -55,7 +55,7 @@ export class CompanyService {
       const company = await this.companyModel.findOne({ _id: id });
       return company.deleteOne();
     } catch (error) {
-      throw new NotFoundException(`User ${id} cant delete cause there is none`);
+      throw new NotFoundException(`Company ${id} cant delete cause there is none`);
     }
   }
 }
