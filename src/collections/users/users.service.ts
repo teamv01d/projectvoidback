@@ -16,14 +16,17 @@ export class UsersService {
     @InjectModel(Users.name) private readonly usersModel: Model<Users>,
   ) {}
 
+  //emaile göre user getiriyor
   async findUserByEmail(email: string): Promise<Users | undefined> {
     return this.usersModel.findOne({ email });
   }
 
+  //bütün kullanıcıları getiriyor
   findAll(): Promise<Users[]> {
     return this.usersModel.find().exec();
   }
 
+  //idsine göre kullanıcı getiriyor
   async findOne(id: string): Promise<Users[]> {
     const user = await this.usersModel.find({ _id: id }).exec();
     if (!user) {
@@ -32,24 +35,27 @@ export class UsersService {
     return user;
   }
 
+  //kullanici verileri alip db uzerine yaziyo
   create(createUserDTO: CreateUserDto): Promise<Users> {
     const user = new this.usersModel(createUserDTO);
     return user.save();
   }
 
-  // async updateProfile(
-  //   id: string,
-  //   updateUserDto: UpdateUserDto,
-  // ): Promise<Users | undefined> {
-  //   const exUser = await this.usersModel
-  //     .findByIdAndUpdate(id, { $set: updateUserDto }, { new: true })
-  //     .exec();
-  //   if (!exUser) {
-  //     throw new NotFoundException(`not found`);
-  //   }
-  //   return exUser;
-  // }
+  //kullanici profil sayfasindaki verileri guncelliyor
+  async updateProfile(
+    id: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<Users | undefined> {
+    const exUser = await this.usersModel
+      .findByIdAndUpdate(id, { $set: updateUserDto }, { new: true })
+      .exec();
+    if (!exUser) {
+      throw new NotFoundException(`not found`);
+    }
+    return exUser;
+  }
 
+  //parolayi sifreliyor
   async convertToHash(value: string) {
     let hashPwd;
     await bcrypt.hash(`${hashtext}${value}`, saltRounds).then((hash) => {
@@ -58,6 +64,7 @@ export class UsersService {
     return await hashPwd;
   }
 
+  //giris icin parolalari karsilastiriyor
   async compareHashes(password, hashed) {
     const match = await bcrypt.compareSync(`${hashtext}${password}`, hashed);
     return await match;
