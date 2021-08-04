@@ -28,6 +28,14 @@ export class CompanyService {
     return this.companyModel.findOne(data);
   }
 
+  async findOne2(id: string): Promise<Company[]> {
+    const company = await this.companyModel.find({ _id: id }).exec();
+    if (!company) {
+      throw new NotFoundException(`Company ${id} not found`);
+    }
+    return company;
+  }
+
   create(createCompanyDTO: CreateCompanyDto): Promise<Company> {
     const company = new this.companyModel(createCompanyDTO);
     return company.save();
@@ -42,7 +50,7 @@ export class CompanyService {
       .exec();
 
     if (!existingCompany) {
-      throw new NotFoundException(`user ${id} not found dude`);
+      throw new NotFoundException(`Company ${id} not found dude`);
     }
     return existingCompany;
   }
@@ -65,7 +73,7 @@ export class CompanyService {
       const company = await this.companyModel.findOne({ _id: id });
       return company.deleteOne();
     } catch (error) {
-      throw new NotFoundException(`User ${id} cant delete cause there is none`);
+      throw new NotFoundException(`Company ${id} cant delete cause there is none`);
     }
   }
 }

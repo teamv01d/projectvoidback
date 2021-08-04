@@ -15,8 +15,12 @@ export class AdvertisementService {
     return this.advertisementModel.find().exec();
   }
 
-  async findOne(data: any): Promise<Advertisement> {
-    return this.advertisementModel.findOne(data);
+  async findOne(id: string): Promise<Advertisement[]> {
+    const advertisement = await this.advertisementModel.find({ _id: id }).exec();
+    if (!advertisement) {
+      throw new NotFoundException(`Advertisement ${id} not found`);
+    }
+    return advertisement;
   }
 
   async create(createAdvertisementDTO: CreateAdvertisementDto): Promise<Advertisement> {
@@ -24,9 +28,9 @@ export class AdvertisementService {
     return await createadvertisement.save();
   }
 
-  async updateAdvertisement(id: string, updateUserDto: UpdateAdvertisementDto,): Promise<Advertisement | undefined> {
+  async updateAdvertisement(id: string, updateAdvertisementDto: UpdateAdvertisementDto,): Promise<Advertisement | undefined> {
     const exAdvertisement = await this.advertisementModel
-      .findOneAndUpdate({ _id: id }, { $set: UpdateAdvertisementDto }, { new: true })
+      .findOneAndUpdate({ _id: id }, { $set: updateAdvertisementDto }, { new: true })
       .exec();
     if (!exAdvertisement) {
       throw new NotFoundException(`not found`);
