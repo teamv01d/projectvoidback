@@ -4,6 +4,11 @@ import { Model } from 'mongoose';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { Company } from '../../entities/company.entity';
+import environment from 'src/env/environment';
+
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const hashtext = environment.hashText;
 
 @Injectable()
 export class CompanyService {
@@ -48,6 +53,19 @@ export class CompanyService {
       throw new NotFoundException(`Company ${id} not found dude`);
     }
     return existingCompany;
+  }
+
+  async convertToHash(value: string) {
+    let hashPwd;
+    await bcrypt.hash(`${hashtext}${value}`, saltRounds).then((hash) => {
+      hashPwd = hash;
+    });
+    return await hashPwd;
+  }
+
+  async compareHashes(password, hashed) {
+    const match = await bcrypt.compareSync(`${hashtext}${password}`, hashed);
+    return await match;
   }
 
   async delete(id: string): Promise<Company> {
