@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { CompanyQuestion } from './company-question.entity';
 
 @Schema()
-export class Users extends Document {
+export class CompanyQuestionAnswer extends Document {
   @Prop({ default: null })
   company_questionID: string;
 
@@ -14,4 +15,4 @@ export class Users extends Document {
 
 }
 
-export const CompanyQuestionAnswerSchema = SchemaFactory.createForClass(Users);
+export const CompanyQuestionAnswerSchema = SchemaFactory.createForClass(CompanyQuestionAnswer);
