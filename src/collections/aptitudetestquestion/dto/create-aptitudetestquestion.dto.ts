@@ -1,7 +1,7 @@
 import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator';
 
 
-export class CreateAdvertisementQuestionDto {
+export class CreateAptitudeTestQuestionDto {
   
 
   @IsString()

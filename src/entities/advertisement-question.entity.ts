@@ -3,14 +3,24 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class AdvertisementQuestion extends Document {
+  
   @Prop({ default: null })
-  advertisementID: string;
+  question: string;
 
   @Prop({ default: null })
-  questionID: string;
+  A: string;
 
   @Prop({ default: null })
-  company_questionID: string;
+  B: string;
+
+  @Prop({ default: null })
+  C: string;
+
+  @Prop({ default: null })
+  D: string;
+
+  @Prop({ default: null })
+  answer: string;
 
 }
 

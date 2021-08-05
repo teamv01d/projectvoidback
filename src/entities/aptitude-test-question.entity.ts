@@ -5,14 +5,22 @@ import { Document } from 'mongoose';
 export class AptitudeTestQuestion extends Document {
 
   @Prop({ default: null })
-  subjectID: string;
-
-  @Prop({ default: null })
-  question_type: string;
-
-  @Prop({ default: null })
-  
   question: string;
+
+  @Prop({ default: null })
+  A: string;
+
+  @Prop({ default: null })
+  B: string;
+
+  @Prop({ default: null })
+  C: string;
+
+  @Prop({ default: null })
+  D: string;
+
+  @Prop({ default: null })
+  answer: string;
 
 }
 
