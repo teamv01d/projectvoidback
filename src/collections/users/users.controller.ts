@@ -8,33 +8,28 @@ import {
   Param,
   Put,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
-import { Users } from 'src/entities/users.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { LoginService } from './login/user-login.service';
 import { UsersService } from './users.service';
 
 //return yanında kullanılması gereken tırnak işareti `
 
 @Controller('users')
 export class UsersController {
-  constructor(
-    private readonly usersService: UsersService,
-    private loginService: LoginService,
-  ) {}
+  constructor(private readonly usersService: UsersService) {}
 
   //register için kullanımda
   @Post('register')
-  async register(@Body() body: CreateUserDto) {
-    body.password = await this.usersService.convertToHash(body.password);
-    return this.usersService.create(body);
+  async register(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
   }
 
   //sign in için kullanımda
   @Post('login')
-  async createUser(@Body() body): Promise<Users[]> {
-    return await this.loginService.loginUser(body);
+  signIn(@Request() req): any {
+    return req.user;
   }
 
   @Get()

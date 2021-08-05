@@ -6,10 +6,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Users } from 'src/entities/users.entity';
 import environment from 'src/env/environment';
 
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const hashtext = environment.hashText;
-
 @Injectable()
 export class UsersService {
   constructor(
@@ -24,8 +20,8 @@ export class UsersService {
     return this.usersModel.find().exec();
   }
 
-  async findOne(id: string): Promise<Users[]> {
-    const user = await this.usersModel.find({ _id: id }).exec();
+  async findOne(id: string): Promise<Users> {
+    const user = await this.usersModel.findOne({ _id: id }).exec();
     if (!user) {
       throw new NotFoundException(`User ${id} not found`);
     }
@@ -49,20 +45,6 @@ export class UsersService {
     }
     return exUser;
   }
-
-  async convertToHash(value: string) {
-    let hashPwd;
-    await bcrypt.hash(`${hashtext}${value}`, saltRounds).then((hash) => {
-      hashPwd = hash;
-    });
-    return await hashPwd;
-  }
-
-  async compareHashes(password, hashed) {
-    const match = await bcrypt.compareSync(`${hashtext}${password}`, hashed);
-    return await match;
-  }
-
   async delete(id: string): Promise<Users> {
     try {
       const user = await this.usersModel.findOne({ _id: id });
