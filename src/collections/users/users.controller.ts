@@ -6,10 +6,11 @@ import {
   Delete,
   Request,
   Param,
-  Put,
   Patch,
   UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
@@ -27,26 +28,31 @@ export class UsersController {
   }
 
   //sign in için kullanımda
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  signIn(@Request() req): any {
+  async login(@Request() req) {
     return req.user;
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
-  }
-
+  @UseGuards(JwtAuthGuard)
   @Post(':id')
   postProfile(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.updateProfile(id, updateUserDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   updateProfile(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.updateProfile(id, updateUserDto);
