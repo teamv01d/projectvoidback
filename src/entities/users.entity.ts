@@ -16,7 +16,7 @@ export class Users extends Document {
   password: string;
 
   @Prop({ default: null })
-  birthdate: Date;
+  birthdate: string;
 
   @Prop({ default: null })
   city: string;

@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Users } from '../../entities/users.entity';
+import { Users } from 'src/entities/users.entity';
 import environment from 'src/env/environment';
 
 const bcrypt = require('bcrypt');
@@ -37,18 +37,18 @@ export class UsersService {
     return user.save();
   }
 
-  // async updateProfile(
-  //   id: string,
-  //   updateUserDto: UpdateUserDto,
-  // ): Promise<Users | undefined> {
-  //   const exUser = await this.usersModel
-  //     .findByIdAndUpdate(id, { $set: updateUserDto }, { new: true })
-  //     .exec();
-  //   if (!exUser) {
-  //     throw new NotFoundException(`not found`);
-  //   }
-  //   return exUser;
-  // }
+  async updateProfile(
+    id: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<Users | undefined> {
+    const exUser = await this.usersModel
+      .findByIdAndUpdate(id, { $set: updateUserDto }, { new: true })
+      .exec();
+    if (!exUser) {
+      throw new NotFoundException(`not found`);
+    }
+    return exUser;
+  }
 
   async convertToHash(value: string) {
     let hashPwd;
