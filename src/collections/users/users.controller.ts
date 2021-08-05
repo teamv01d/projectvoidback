@@ -6,6 +6,8 @@ import {
   Delete,
   Request,
   Param,
+  Put,
+  Patch,
 } from '@nestjs/common';
 import { Users } from 'src/entities/users.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -35,11 +37,6 @@ export class UsersController {
     return await this.loginService.loginUser(body);
   }
 
-  // @Post('login')
-  // signIn(@Request() req): any {
-  //   return req.user;
-  // }
-
   @Get()
   findAll() {
     return this.usersService.findAll();
@@ -50,15 +47,15 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
-  // @Post(':id')
-  // postProfile(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.usersService.postProfile(id, updateUserDto);
-  // }
+  @Post(':id')
+  postProfile(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.updateProfile(id, updateUserDto);
+  }
 
-  // @Put(':id')
-  // updateProfile(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.usersService.updateProfile(id, updateUserDto);
-  // }
+  @Patch(':id')
+  updateProfile(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.updateProfile(id, updateUserDto);
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

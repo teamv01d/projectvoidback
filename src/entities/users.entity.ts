@@ -15,25 +15,28 @@ export class Users extends Document {
   @Prop()
   password: string;
 
-  @Prop({ default: null })
+  @Prop()
+  photo: string;
+
+  @Prop({ default: ' ' })
   birthdate: string;
 
-  @Prop({ default: null })
+  @Prop({ default: ' ' })
   city: string;
 
-  @Prop({ default: null })
+  @Prop({ default: ' ' })
   about: string;
 
-  @Prop({ default: null })
+  @Prop({ default: ' ' })
   university: string;
 
-  @Prop({ default: null })
+  @Prop({ default: ' ' })
   faculty: string;
 
-  @Prop({ default: null })
+  @Prop({ default: ' ' })
   phone: string;
 
-  @Prop({ default: null })
+  @Prop({ default: ' ' })
   cv: string;
 
   @Prop({ default: true })
