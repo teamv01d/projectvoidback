@@ -13,6 +13,9 @@ export class Company extends Document {
   password: string;
 
   @Prop({ default: null })
+  photo: string;
+
+  @Prop({ default: null })
   about: string;
 
   @Prop({ default: null })
