@@ -36,7 +36,7 @@ export class UsersController {
     return await this.loginService.loginUser(body);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.usersService.findAll();
   }
@@ -46,7 +46,7 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
-  @Put('upprofile')
+  @Put(':id')
   updateProfile(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.updateProfile(id, updateUserDto);
   }

@@ -5,6 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Users } from '../../entities/users.entity';
 import environment from 'src/env/environment';
+import { JwtService } from '@nestjs/jwt';
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
