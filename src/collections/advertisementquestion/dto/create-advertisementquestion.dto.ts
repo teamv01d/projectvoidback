@@ -2,16 +2,30 @@ import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator';
 
 
 export class CreateAdvertisementQuestionDto {
-  @IsString()
-  @IsOptional()
-  advertisementID: string;
+  
 
   @IsString()
   @IsOptional()
-  questionID: string;
+  question: string;
 
   @IsString()
   @IsOptional()
-  company_questionID: string;
+  A: string;
+
+  @IsString()
+  @IsOptional()
+  B: string;
+
+  @IsString()
+  @IsOptional()
+  C: string;
+
+  @IsString()
+  @IsOptional()
+  D: string;
+
+  @IsString()
+  @IsOptional()
+  answer: string;
 
 }
