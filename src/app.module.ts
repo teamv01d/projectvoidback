@@ -5,6 +5,7 @@ import { UsersModule } from './collections/users/users.module';
 import { CompanyModule } from './collections/company/company.module';
 import { AdvertisementModule } from './collections/advertisement/advertisement.module';
 import { AdvertisementQuestionModule } from './collections/advertisementquestion/advertisementquestion.module';
+import { AptitudeTestQuestionModule } from './collections/aptitudetestquestion/aptitudetestquestion.module';
 
 
 @Module({
@@ -13,6 +14,7 @@ import { AdvertisementQuestionModule } from './collections/advertisementquestion
     CompanyModule,
     AdvertisementModule,
     AdvertisementQuestionModule,
+    AptitudeTestQuestionModule,
     MongooseModule.forRoot(environment.mongoUrl),
   ],
   controllers: [],
