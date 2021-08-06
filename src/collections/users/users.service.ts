@@ -9,7 +9,7 @@ import { CreateCompanyDto } from './dto/create-company.dto';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(Users.name) private readonly usersModel: Model<Users>
+    @InjectModel(Users.name) public readonly usersModel: Model<Users>
   ) {}
 
   async findUserByEmail(email: string): Promise<Users | undefined> {

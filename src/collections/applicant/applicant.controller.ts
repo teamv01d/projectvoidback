@@ -23,9 +23,15 @@ import { UpdateApplicantDto } from './dto/update-applicant.dto';
     
     
     @Get()
-    findAll() {
+    findAll2() {
       return this.applicantService.findAll();
     }
+
+    @Get('get/:id')
+    findAll(@Param('id') id: string) {
+      return this.applicantService.findUser(id,0);
+    }
+  
   
     @Get(':id')
     findOne(@Param('id') id: string) {

@@ -11,6 +11,7 @@ import { UploadModule } from './upload/upload.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
+import { ApplicantModule } from './collections/applicant/applicant.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AppController } from './app.controller';
     AdvertisementModule,
     AdvertisementQuestionModule,
     AptitudeTestQuestionModule,
+    ApplicantModule,
     UploadModule,
     MulterModule.register({
       dest: './uploads',
