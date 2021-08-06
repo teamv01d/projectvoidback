@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { CreateCompanyDto } from './dto/create-company.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
@@ -23,15 +24,14 @@ export class UsersController {
 
   //register için kullanımda
   @Post('register')
-  async register(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async userRegister(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.createUser(createUserDto);
   }
 
-  //sign in için kullanımda
-  @UseGuards(LocalAuthGuard)
-  @Post('login')
-  async login(@Request() req) {
-    return req.user;
+  @Post('company/register')
+  async companyRegister(@Body() body: CreateCompanyDto) {
+    body.role = false;
+    return this.usersService.createCompany(body);
   }
 
   @UseGuards(JwtAuthGuard)
