@@ -7,10 +7,7 @@ export class Applicant extends Document {
   userID: string;
 
   @Prop({ default: null })
-  companyID: string;
-
-  @Prop({ default: null })
-  advertisement: string;
+  advertisementID: string;
 
   @Prop({ default: null })
   score: number;
