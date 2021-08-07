@@ -9,7 +9,7 @@ import { CreateCompanyDto } from './dto/create-company.dto';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(Users.name) private readonly usersModel: Model<Users>
+    @InjectModel(Users.name) private readonly usersModel: Model<Users>,
   ) {}
 
   async findUserByEmail(email: string): Promise<Users | undefined> {
@@ -49,14 +49,5 @@ export class UsersService {
       throw new NotFoundException(`not found`);
     }
     return exUser;
-  }
-  
-  async delete(id: string): Promise<Users> {
-    try {
-      const user = await this.usersModel.findOne({ _id: id });
-      return user.deleteOne();
-    } catch (error) {
-      throw new NotFoundException(`User ${id} cant delete cause there is none`);
-    }
   }
 }

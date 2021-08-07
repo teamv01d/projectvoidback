@@ -20,7 +20,6 @@ export class ApplicantController {
     return this.applicantService.create(createApplicantDto);
   }
 
-
   @Get()
   findAll() {
     return this.applicantService.findAll();
@@ -42,10 +41,5 @@ export class ApplicantController {
     @Body() updateApplicantDto: UpdateApplicantDto,
   ) {
     return this.applicantService.updateApplicant(id, updateApplicantDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.applicantService.delete(id);
   }
 }

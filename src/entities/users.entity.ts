@@ -40,9 +40,6 @@ export class Users extends Document {
   cv: string;
 
   @Prop({ default: true })
-  isActive: boolean;
-
-  @Prop({ default: true })
   role: boolean;
 
   @Prop()

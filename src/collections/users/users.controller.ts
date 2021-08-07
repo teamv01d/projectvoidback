@@ -52,7 +52,7 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard,LocalAuthGuard)
+  @UseGuards(JwtAuthGuard, LocalAuthGuard)
   @Post(':id')
   @FormDataRequest()
   postProfile(
@@ -63,17 +63,11 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch(':id')
+  @Patch()
   @FormDataRequest()
-  updateProfile(
-    @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
-  ): any {
+  updateProfile(@Request() req, @Body() updateUserDto: UpdateUserDto): any {
+    const id = req.user.user._id;
     return this.usersService.updateProfile(id, updateUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.delete(id);
-  }
 }
