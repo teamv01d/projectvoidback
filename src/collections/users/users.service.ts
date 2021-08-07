@@ -13,7 +13,7 @@ export class UsersService {
   ) {}
 
   async findUserByEmail(email: string): Promise<Users | undefined> {
-    return this.usersModel.findOne({ email });
+    return this.usersModel.findOne({ email }).exec();
   }
 
   findAll(): Promise<Users[]> {

@@ -3,42 +3,33 @@ import {
   Controller,
   Get,
   Post,
-  Delete,
-  Patch,
-  Param,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { AdvertisementQuestionService } from './advertisementquestion.service';
 import { CreateAdvertisementQuestionDto } from './dto/create-advertisementquestion.dto';
-import { UpdateAdvertisementQuestionDto } from './dto/update-advertisementquestion.dto';
 
-
-@Controller('advertisementquestion')
+@Controller('advquestion')
 export class AdvertisementQuestionController {
-  constructor(private readonly advertisementQuestionService: AdvertisementQuestionService) { }
+  constructor(
+    private readonly advertisementQuestionService: AdvertisementQuestionService,
+  ) {}
 
-  @Post('advertisementquestioncreate')
-  register(@Body() createAdvertisementQuestionDto: CreateAdvertisementQuestionDto) {
-    return this.advertisementQuestionService.create(createAdvertisementQuestionDto);
+  @UseGuards(JwtAuthGuard)
+  @Post('create')
+  register(
+    @Request() req,
+    @Body() createAdvertisementQuestionDto: CreateAdvertisementQuestionDto,
+  ) {
+    return this.advertisementQuestionService.create(
+      createAdvertisementQuestionDto,
+    );
   }
-  
-  
+
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.advertisementQuestionService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.advertisementQuestionService.findOne(id);
-  }
-
-  @Patch(':id')
-  updateAdvertisementQuestion(@Param('id') id: string, @Body() updateAdvertisementQuestionDto: UpdateAdvertisementQuestionDto) {
-    return this.advertisementQuestionService.updateAdvertisementQuestion(id, updateAdvertisementQuestionDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.advertisementQuestionService.delete(id);
   }
 }
