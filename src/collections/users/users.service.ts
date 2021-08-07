@@ -4,12 +4,12 @@ import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Users } from 'src/entities/users.entity';
-import environment from 'src/env/environment';
+import { CreateCompanyDto } from './dto/create-company.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(Users.name) private readonly usersModel: Model<Users>,
+    @InjectModel(Users.name) private readonly usersModel: Model<Users>
   ) {}
 
   async findUserByEmail(email: string): Promise<Users | undefined> {
@@ -28,9 +28,14 @@ export class UsersService {
     return user;
   }
 
-  create(createUserDTO: CreateUserDto): Promise<Users> {
+  createUser(createUserDTO: CreateUserDto): Promise<Users> {
     const user = new this.usersModel(createUserDTO);
     return user.save();
+  }
+
+  createCompany(createCompanyDTO: CreateCompanyDto): Promise<Users> {
+    const company = new this.usersModel(createCompanyDTO);
+    return company.save();
   }
 
   async updateProfile(
@@ -45,6 +50,7 @@ export class UsersService {
     }
     return exUser;
   }
+  
   async delete(id: string): Promise<Users> {
     try {
       const user = await this.usersModel.findOne({ _id: id });

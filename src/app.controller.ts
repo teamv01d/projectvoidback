@@ -7,15 +7,10 @@ import { LocalAuthGuard } from './auth/local-auth.guard';
 export class AppController {
   constructor(private authService: AuthService) {}
 
+  //signin işlemi için kullanılıyor.
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req) {
     return this.authService.login(req.user);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
   }
 }

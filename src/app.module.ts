@@ -1,6 +1,4 @@
-import {
-  Module,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import environment from './env/environment';
 import { UsersModule } from './collections/users/users.module';
@@ -11,14 +9,18 @@ import { UploadModule } from './upload/upload.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
+import { NestjsFormDataModule } from 'nestjs-form-data';
+import { ApplicantModule } from './collections/applicant/applicant.module';
 
 @Module({
   imports: [
     UsersModule,
+    ApplicantModule,
     AdvertisementModule,
     AdvertisementQuestionModule,
     AptitudeTestQuestionModule,
     UploadModule,
+    NestjsFormDataModule,
     MulterModule.register({
       dest: './uploads',
     }),

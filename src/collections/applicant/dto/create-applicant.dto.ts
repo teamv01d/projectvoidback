@@ -1,19 +1,13 @@
-import { IsInt, IsOptional, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
+import { ObjectId } from 'mongoose';
 
 export class CreateApplicantDto {
- 
   @IsString()
-  userID: string;
+  userID: ObjectId;
 
   @IsString()
-  @IsOptional()
-  companyID: string;
+  advertisementID: ObjectId;
 
   @IsString()
-  @IsOptional()
-  advertisementID: string;
-
-  @IsInt()
-  @IsOptional()
-  score: number;
+  score: string;
 }

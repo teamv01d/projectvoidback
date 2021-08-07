@@ -9,7 +9,7 @@ export class Users extends Document {
   @Prop()
   surname: string;
 
-  @Prop()
+  @Prop({ unique: true })
   email: string;
 
   @Prop()
@@ -18,28 +18,37 @@ export class Users extends Document {
   @Prop()
   photo: string;
 
-  @Prop({ default: ' ' })
+  @Prop({ default: null })
   birthdate: string;
 
-  @Prop({ default: ' ' })
+  @Prop({ default: null })
   city: string;
 
-  @Prop({ default: ' ' })
+  @Prop({ default: null })
   about: string;
 
-  @Prop({ default: ' ' })
+  @Prop({ default: null })
   university: string;
 
-  @Prop({ default: ' ' })
+  @Prop({ default: null })
   faculty: string;
 
-  @Prop({ default: ' ' })
+  @Prop({ default: null })
   phone: string;
 
-  @Prop({ default: ' ' })
+  @Prop({ default: null })
   cv: string;
 
   @Prop({ default: true })
   isActive: boolean;
+
+  @Prop({ default: true })
+  role: boolean;
+
+  @Prop()
+  company_name: string;
+
+  @Prop({ default: null })
+  web_address: string;
 }
 export const UsersSchema = SchemaFactory.createForClass(Users);

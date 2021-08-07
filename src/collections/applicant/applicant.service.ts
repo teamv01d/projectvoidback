@@ -8,11 +8,33 @@ import { UpdateApplicantDto } from './dto/update-applicant.dto';
 @Injectable()
 export class ApplicantService {
   constructor(
-    @InjectModel(Applicant.name) private readonly applicantModel: Model<Applicant>,
+    @InjectModel(Applicant.name)
+    private readonly applicantModel: Model<Applicant>,
   ) {}
 
   findAll(): Promise<Applicant[]> {
     return this.applicantModel.find().exec();
+  }
+
+  findUsersByApp() {
+    try {
+      const usersprofiles = this.applicantModel.aggregate([
+        {
+          $match: {},
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'userID',
+            foreignField: '_id',
+            as: 'usersprofile',
+          },
+        },
+      ]);
+      return usersprofiles;
+    } catch (error) {
+      throw new NotFoundException('there is none what u looking for');
+    }
   }
 
   async findOne(id: string): Promise<Applicant[]> {
@@ -23,14 +45,21 @@ export class ApplicantService {
     return applicant;
   }
 
-  async create(createAdvertisementDTO: CreateApplicantDto): Promise<Applicant> {
-   const createapplicant = new this.applicantModel(createAdvertisementDTO); 
-    return await createapplicant.save();
+  create(createApplicantDto: CreateApplicantDto): Promise<Applicant> {
+    const createapplicant = new this.applicantModel(createApplicantDto);
+    return createapplicant.save();
   }
 
-  async updateApplicant(id: string, updateApplicantDto: UpdateApplicantDto,): Promise<Applicant | undefined> {
+  async updateApplicant(
+    id: string,
+    updateApplicantDto: UpdateApplicantDto,
+  ): Promise<Applicant | undefined> {
     const exApplicant = await this.applicantModel
-      .findOneAndUpdate({ _id: id }, { $set: updateApplicantDto }, { new: true })
+      .findOneAndUpdate(
+        { _id: id },
+        { $set: updateApplicantDto },
+        { new: true },
+      )
       .exec();
     if (!exApplicant) {
       throw new NotFoundException(`not found`);
@@ -43,7 +72,9 @@ export class ApplicantService {
       const applicant = await this.applicantModel.findOne({ _id: id });
       return applicant.deleteOne();
     } catch (error) {
-      throw new NotFoundException(`Applicant ${id} cant delete cause there is none`);
+      throw new NotFoundException(
+        `Applicant ${id} cant delete cause there is none`,
+      );
     }
   }
 }

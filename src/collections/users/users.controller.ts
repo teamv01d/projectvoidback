@@ -9,8 +9,10 @@ import {
   Patch,
   UseGuards,
 } from '@nestjs/common';
+import { FormDataRequest } from 'nestjs-form-data';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { CreateCompanyDto } from './dto/create-company.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
@@ -23,15 +25,14 @@ export class UsersController {
 
   //register için kullanımda
   @Post('register')
-  async register(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async userRegister(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.createUser(createUserDto);
   }
 
-  //sign in için kullanımda
-  @UseGuards(LocalAuthGuard)
-  @Post('login')
-  async login(@Request() req) {
-    return req.user;
+  @Post('company/register')
+  async companyRegister(@Body() body: CreateCompanyDto) {
+    body.role = false;
+    return this.usersService.createCompany(body);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -40,21 +41,34 @@ export class UsersController {
     return req.user;
   }
 
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.usersService.findOne(id);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard,LocalAuthGuard)
   @Post(':id')
-  postProfile(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  @FormDataRequest()
+  postProfile(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): any {
     return this.usersService.updateProfile(id, updateUserDto);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  updateProfile(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  @FormDataRequest()
+  updateProfile(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): any {
     return this.usersService.updateProfile(id, updateUserDto);
   }
 
