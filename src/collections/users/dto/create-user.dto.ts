@@ -44,4 +44,8 @@ export class CreateUserDto {
   @IsBoolean()
   @IsOptional()
   role: boolean;
+
+  @IsString()
+  @IsOptional()
+  photo: string;
 }

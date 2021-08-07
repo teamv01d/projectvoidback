@@ -25,4 +25,5 @@ export class CreateCompanyDto {
   @IsString()
   @IsOptional()
   role: boolean;
+
 }
