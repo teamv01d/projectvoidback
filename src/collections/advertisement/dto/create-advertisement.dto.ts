@@ -1,10 +1,10 @@
 import { IsBoolean, IsDate, IsEmpty, IsOptional, IsString } from 'class-validator';
+import { ObjectId } from 'mongoose';
 
 export class CreateAdvertisementDto {
  
-  @IsString()
   @IsOptional()
-  readonly companyID: string;
+  readonly companyID: ObjectId;
 
   @IsString()
   @IsOptional()

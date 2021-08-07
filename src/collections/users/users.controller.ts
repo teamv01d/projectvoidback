@@ -9,6 +9,7 @@ import {
   Patch,
   UseGuards,
 } from '@nestjs/common';
+import { FormDataRequest } from 'nestjs-form-data';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { CreateCompanyDto } from './dto/create-company.dto';
@@ -40,21 +41,34 @@ export class UsersController {
     return req.user;
   }
 
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.usersService.findOne(id);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard,LocalAuthGuard)
   @Post(':id')
-  postProfile(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  @FormDataRequest()
+  postProfile(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): any {
     return this.usersService.updateProfile(id, updateUserDto);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  updateProfile(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  @FormDataRequest()
+  updateProfile(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): any {
     return this.usersService.updateProfile(id, updateUserDto);
   }
 

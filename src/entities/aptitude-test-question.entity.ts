@@ -3,7 +3,6 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class AptitudeTestQuestion extends Document {
-
   @Prop({ default: null })
   question: string;
 
@@ -21,7 +20,7 @@ export class AptitudeTestQuestion extends Document {
 
   @Prop({ default: null })
   answer: string;
-
 }
 
-export const AptitudeTestQuestionSchema = SchemaFactory.createForClass(AptitudeTestQuestion);
+export const AptitudeTestQuestionSchema =
+  SchemaFactory.createForClass(AptitudeTestQuestion);

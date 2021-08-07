@@ -50,6 +50,7 @@ export class UsersService {
     }
     return exUser;
   }
+  
   async delete(id: string): Promise<Users> {
     try {
       const user = await this.usersModel.findOne({ _id: id });

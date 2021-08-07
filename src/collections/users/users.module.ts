@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { NestjsFormDataModule } from 'nestjs-form-data';
 import { Users, UsersSchema } from '../../entities/users.entity';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 
 @Module({
   imports: [
+    NestjsFormDataModule,
     MongooseModule.forFeature([
       {
         name: Users.name,
@@ -15,6 +17,6 @@ import { UsersService } from './users.service';
   ],
   controllers: [UsersController],
   providers: [UsersService],
-  exports: [UsersService],
+  exports: [UsersService]
 })
 export class UsersModule {}
