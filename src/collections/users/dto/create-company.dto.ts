@@ -24,9 +24,5 @@ export class CreateCompanyDto {
 
   @IsString()
   @IsOptional()
-  isActive: boolean;
-
-  @IsString()
-  @IsOptional()
   role: boolean;
 }

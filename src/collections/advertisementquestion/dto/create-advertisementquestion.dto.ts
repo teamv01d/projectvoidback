@@ -5,27 +5,21 @@ export class CreateAdvertisementQuestionDto {
   
 
   @IsString()
-  @IsOptional()
   question: string;
 
   @IsString()
-  @IsOptional()
-  A: string;
+  optionA: string;
 
   @IsString()
-  @IsOptional()
-  B: string;
+  optionB: string;
 
   @IsString()
-  @IsOptional()
-  C: string;
+  optionC: string;
 
   @IsString()
-  @IsOptional()
-  D: string;
+  optionD: string;
 
   @IsString()
-  @IsOptional()
   answer: string;
 
 }

@@ -4,25 +4,23 @@ import { Document, isValidObjectId, ObjectId } from 'mongoose';
 @Schema()
 export class Advertisement extends Document {
   @Prop({ default: null, type: isValidObjectId })
-  companyID: ObjectId;
+  userID: ObjectId;
 
-  @Prop({ default: null })
+  @Prop()
   advertisement_name: string;
 
-  @Prop({ default: null })
+  @Prop()
   explanation: string;
 
-  @Prop({ default: new Date() })
+  @Prop({ default: null })
   start_date: string;
 
-  @Prop({ default: new Date() })
+  @Prop()
   end_date: string;
 
   @Prop({ default: null })
   city: string;
 
-  @Prop({ default: true })
-  advertisement_type: boolean;
 }
 
 export const AdvertisementSchema = SchemaFactory.createForClass(Advertisement);
