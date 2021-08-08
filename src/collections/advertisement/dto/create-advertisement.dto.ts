@@ -1,10 +1,8 @@
-import { IsBoolean, IsDate, IsEmpty, IsOptional, IsString } from 'class-validator';
-import { ObjectId } from 'mongoose';
+import { IsString } from 'class-validator';
+import { ObjectId, SchemaTypes } from 'mongoose';
 
 export class CreateAdvertisementDto {
- 
-  @IsOptional()
-  readonly companyID: ObjectId;
+  companyID: ObjectId;
 
   @IsString()
   readonly advertisement_name: string;
@@ -13,14 +11,11 @@ export class CreateAdvertisementDto {
   readonly explanation: string;
 
   @IsString()
-  @IsOptional()
   readonly start_date: string;
 
   @IsString()
   readonly end_date: string;
 
   @IsString()
-  @IsOptional()
   readonly city: string;
-
 }

@@ -20,6 +20,9 @@ export class AptitudeTestQuestion extends Document {
 
   @Prop()
   answer: string;
+
+  @Prop()
+  subject: string;
 }
 
 export const AptitudeTestQuestionSchema =

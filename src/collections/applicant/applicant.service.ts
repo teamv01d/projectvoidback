@@ -12,37 +12,53 @@ export class ApplicantService {
     private readonly applicantModel: Model<Applicant>,
   ) {}
 
-  findAll(): Promise<Applicant[]> {
-    return this.applicantModel.find().exec();
-  }
-
   findUsersByApp() {
     try {
-      const usersprofiles = this.applicantModel.aggregate([
-        {
-          $match: {},
-        },
+      const usersProfiles = this.applicantModel.aggregate([
         {
           $lookup: {
             from: 'users',
             localField: 'userID',
             foreignField: '_id',
-            as: 'usersprofile',
+            as: 'usersProfile',
           },
         },
       ]);
-      return usersprofiles;
+      return usersProfiles;
     } catch (error) {
       throw new NotFoundException('there is none what u looking for');
     }
   }
 
-  async findOne(id: string): Promise<Applicant[]> {
-    const applicant = await this.applicantModel.find({ _id: id }).exec();
-    if (!applicant) {
-      throw new NotFoundException(`Applicant ${id} not found`);
+  findAppByUser() {
+    try {
+      const userApplications = this.applicantModel.aggregate([
+        {
+          $match: {
+            
+          }
+        },
+        {
+          $group: {
+            _id: '$userID',
+            applications: {
+              $push: '$advertisementID',
+            },
+          },
+        },
+        {
+          $lookup: {
+            from: 'advertisements',
+            localField: 'advertisementID',
+            foreignField: '_id',
+            as: 'basvurularim',
+          },
+        },
+      ]);
+      return userApplications;
+    } catch (error) {
+      throw new NotFoundException('');
     }
-    return applicant;
   }
 
   create(createApplicantDto: CreateApplicantDto): Promise<Applicant> {

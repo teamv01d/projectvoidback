@@ -37,10 +37,7 @@ export class Users extends Document {
   phone: string;
 
   @Prop({ default: null })
-  cv: string;
-
-  @Prop({ default: true })
-  isActive: boolean;
+  cvUrl: string;
 
   @Prop({ default: true })
   role: boolean;

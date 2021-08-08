@@ -8,7 +8,8 @@ import { UpdateAptitudeTestQuestionDto } from './dto/update-aptitudetestquestion
 @Injectable()
 export class AptitudeTestQuestionService {
   constructor(
-    @InjectModel(AptitudeTestQuestion.name) private readonly aptitudeTestQuestionModel: Model<AptitudeTestQuestion>,
+    @InjectModel(AptitudeTestQuestion.name)
+    private readonly aptitudeTestQuestionModel: Model<AptitudeTestQuestion>,
   ) {}
 
   findAll(): Promise<AptitudeTestQuestion[]> {
@@ -16,25 +17,49 @@ export class AptitudeTestQuestionService {
   }
 
   async findOne(id: string): Promise<AptitudeTestQuestion[]> {
-    const aptitudeq = await this.aptitudeTestQuestionModel.find({ _id: id }).exec();
+    const aptitudeq = await this.aptitudeTestQuestionModel
+      .find({ _id: id })
+      .exec();
     if (!aptitudeq) {
       throw new NotFoundException(`Aptitude test question ${id} not found`);
     }
     return aptitudeq;
   }
 
-  async create(createAptitudeTestQuestionDTO: CreateAptitudeTestQuestionDto): Promise<AptitudeTestQuestion> {
-   const createaptitudeq = new this.aptitudeTestQuestionModel(createAptitudeTestQuestionDTO); 
+  async create(
+    createAptitudeTestQuestionDTO: CreateAptitudeTestQuestionDto,
+  ): Promise<AptitudeTestQuestion> {
+    const createaptitudeq = new this.aptitudeTestQuestionModel(
+      createAptitudeTestQuestionDTO,
+    );
     return await createaptitudeq.save();
   }
 
-  async updateAptitudeTestQuestion(id: string, updateAptitudeTestQuestionDto: UpdateAptitudeTestQuestionDto,): Promise<AptitudeTestQuestion | undefined> {
+  async updateAptitudeTestQuestion(
+    id: string,
+    updateAptitudeTestQuestionDto: UpdateAptitudeTestQuestionDto,
+  ): Promise<AptitudeTestQuestion | undefined> {
     const exAptitudeTestQuestion = await this.aptitudeTestQuestionModel
-      .findOneAndUpdate({ _id: id }, { $set: updateAptitudeTestQuestionDto }, { new: true })
+      .findOneAndUpdate(
+        { _id: id },
+        { $set: updateAptitudeTestQuestionDto },
+        { new: true },
+      )
       .exec();
     if (!exAptitudeTestQuestion) {
       throw new NotFoundException(`not found`);
     }
     return exAptitudeTestQuestion;
+  }
+
+  findBySubject(subject: string) {
+    try {
+      const questionSubject = this.aptitudeTestQuestionModel.aggregate([
+        {
+          $match: { status: subject },
+        },
+      ]);
+      return questionSubject;
+    } catch (error) {}
   }
 }

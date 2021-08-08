@@ -11,7 +11,8 @@ export class UploadService {
       api_secret: environment.cloudinary.api_secret,
     });
   }
-  async upload(file: any): Promise<any> {
+
+  async uploadCv(file: any): Promise<any> {
     let result;
     try {
       await cloudinary.v2.uploader.upload(
@@ -21,7 +22,23 @@ export class UploadService {
           return response;
         },
       );
-      return await result;
+      return await result.url;
+    } catch (err) {
+      return await err;
+    }
+  }
+
+  async uploadPhoto(file: any): Promise<any> {
+    let result;
+    try {
+      await cloudinary.v2.uploader.upload(
+        file.path,
+        function (error, response) {
+          result = response;
+          return response;
+        },
+      );
+      return await result.url;
     } catch (err) {
       return await err;
     }
