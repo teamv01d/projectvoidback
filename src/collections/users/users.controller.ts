@@ -78,16 +78,6 @@ export class UsersController {
     return this.usersService.updateProfile(id, UpdateUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Patch('company/photo')
-  @FormDataRequest()
-  patchCompanyPhoto(
-    @Request() req,
-    @Body() updateCompanyDto: UpdateCompanyDto,
-  ): any {
-    const id = req.user.user._id;
-    return this.usersService.updateComProfile(id, updateCompanyDto);
-  }
 
   //cv güncelle
   @UseGuards(JwtAuthGuard)

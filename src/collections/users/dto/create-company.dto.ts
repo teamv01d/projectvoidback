@@ -24,6 +24,10 @@ export class CreateCompanyDto {
 
   @IsString()
   @IsOptional()
+  city: string;
+
+  @IsString()
+  @IsOptional()
   web_address: string;
 
   @IsString()
