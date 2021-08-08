@@ -67,14 +67,4 @@ export class ApplicantService {
     return exApplicant;
   }
 
-  async delete(id: string): Promise<Applicant> {
-    try {
-      const applicant = await this.applicantModel.findOne({ _id: id });
-      return applicant.deleteOne();
-    } catch (error) {
-      throw new NotFoundException(
-        `Applicant ${id} cant delete cause there is none`,
-      );
-    }
-  }
 }

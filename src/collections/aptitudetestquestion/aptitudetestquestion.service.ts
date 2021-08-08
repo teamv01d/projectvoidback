@@ -37,13 +37,4 @@ export class AptitudeTestQuestionService {
     }
     return exAptitudeTestQuestion;
   }
-
-  async delete(id: string): Promise<AptitudeTestQuestion> {
-    try {
-      const aptitudeq = await this.aptitudeTestQuestionModel.findOne({ _id: id });
-      return aptitudeq.deleteOne();
-    } catch (error) {
-      throw new NotFoundException(`Aptitude test question ${id} cant delete cause there is none`);
-    }
-  }
 }
