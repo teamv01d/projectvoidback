@@ -1,8 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, isValidObjectId, ObjectId } from 'mongoose';
 
 @Schema()
 export class AdvertisementQuestion extends Document {
+  @Prop({ type: isValidObjectId })
+  advertisementID: ObjectId;
+
   @Prop()
   question: string;
 
@@ -20,6 +23,9 @@ export class AdvertisementQuestion extends Document {
 
   @Prop()
   answer: string;
+
+  @Prop()
+  subject: string;
 }
 
 export const AdvertisementQuestionSchema = SchemaFactory.createForClass(

@@ -3,17 +3,15 @@ import {
   Controller,
   Get,
   Post,
-  Delete,
   Request,
-  Param,
-  Patch,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { FormDataRequest } from 'nestjs-form-data';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateCompanyDto } from './dto/update-company.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 
@@ -23,57 +21,70 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  //register için kullanımda
+  //user register için kullanımda
   @Post('register')
   async userRegister(@Body() createUserDto: CreateUserDto) {
     return this.usersService.createUser(createUserDto);
   }
 
+  //company register için kullanımda
   @Post('company/register')
   async companyRegister(@Body() body: CreateCompanyDto) {
     body.role = false;
     return this.usersService.createCompany(body);
   }
 
+  //user verilerini getir
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
-    return req.user;
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+    const userID = req.user.user._id;
+    return this.usersService.findOne(userID);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
+  @Get('profile')
+  getcompanyProfile(@Request() req) {
+    const companyID = req.user.user._id;
+    return this.usersService.findOne(companyID);
   }
 
-  @UseGuards(JwtAuthGuard,LocalAuthGuard)
-  @Post(':id')
+  //profili güncelle
+  @UseGuards(JwtAuthGuard)
+  @Patch()
   @FormDataRequest()
-  postProfile(
-    @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
-  ): any {
+  updateProfile(@Request() req, @Body() updateUserDto: UpdateUserDto): any {
+    const id = req.user.user._id;
     return this.usersService.updateProfile(id, updateUserDto);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch(':id')
+  @Patch('company')
   @FormDataRequest()
-  updateProfile(
-    @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
+  updateCompanyProfile(
+    @Request() req,
+    @Body() updateCompanyDto: UpdateCompanyDto,
   ): any {
-    return this.usersService.updateProfile(id, updateUserDto);
+    const id = req.user.user._id;
+    return this.usersService.updateComProfile(id, updateCompanyDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.delete(id);
+  //profil fotoğrafı güncelle
+  @UseGuards(JwtAuthGuard)
+  @Patch('photo')
+  @FormDataRequest()
+  patchPhoto(@Request() req, @Body() UpdateUserDto: UpdateUserDto): any {
+    const id = req.user.user._id;
+    return this.usersService.updateProfile(id, UpdateUserDto);
+  }
+
+
+  //cv güncelle
+  @UseGuards(JwtAuthGuard)
+  @Patch('cv')
+  @FormDataRequest()
+  patchCv(@Request() req, @Body() UpdateUserDto: UpdateUserDto): any {
+    const id = req.user.user._id;
+    return this.usersService.updateProfile(id, UpdateUserDto);
   }
 }

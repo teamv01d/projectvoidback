@@ -20,10 +20,17 @@ export class CreateCompanyDto {
 
   @IsString()
   @IsOptional()
+  phone: string;
+
+  @IsString()
+  @IsOptional()
+  city: string;
+
+  @IsString()
+  @IsOptional()
   web_address: string;
 
   @IsString()
   @IsOptional()
   role: boolean;
-
 }

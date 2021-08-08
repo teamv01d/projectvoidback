@@ -5,15 +5,16 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Users } from 'src/entities/users.entity';
 import { CreateCompanyDto } from './dto/create-company.dto';
+import { UpdateCompanyDto } from './dto/update-company.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(Users.name) private readonly usersModel: Model<Users>
+    @InjectModel(Users.name) private readonly usersModel: Model<Users>,
   ) {}
 
   async findUserByEmail(email: string): Promise<Users | undefined> {
-    return this.usersModel.findOne({ email });
+    return this.usersModel.findOne({ email }).exec();
   }
 
   findAll(): Promise<Users[]> {
@@ -48,15 +49,19 @@ export class UsersService {
     if (!exUser) {
       throw new NotFoundException(`not found`);
     }
-    return exUser;
+    return exUser.save();
   }
-  
-  async delete(id: string): Promise<Users> {
-    try {
-      const user = await this.usersModel.findOne({ _id: id });
-      return user.deleteOne();
-    } catch (error) {
-      throw new NotFoundException(`User ${id} cant delete cause there is none`);
+
+  async updateComProfile(
+    id: string,
+    updateCompanyDto: UpdateCompanyDto,
+  ): Promise<Users | undefined> {
+    const exUser = await this.usersModel
+      .findByIdAndUpdate(id, { $set: updateCompanyDto }, { new: true })
+      .exec();
+    if (!exUser) {
+      throw new NotFoundException(`not found`);
     }
+    return exUser.save();
   }
 }

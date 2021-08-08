@@ -1,8 +1,8 @@
 import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator';
 
-
 export class CreateAptitudeTestQuestionDto {
-  
+  @IsString()
+  subject: string;
 
   @IsString()
   question: string;
@@ -21,5 +21,4 @@ export class CreateAptitudeTestQuestionDto {
 
   @IsString()
   answer: string;
-
 }

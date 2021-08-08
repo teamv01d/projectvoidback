@@ -6,6 +6,7 @@ export class Advertisement extends Document {
   @Prop({ type: MongooseSchema.Types.ObjectId , ref: 'Users' })
   userID: ObjectId;
 
+
   @Prop()
   advertisement_name: string;
 
@@ -23,7 +24,6 @@ export class Advertisement extends Document {
 
   @Prop({ type: MongooseSchema.Types.ObjectId , ref: 'Users' })
   companyID: ObjectId;
-
 }
 
 export const AdvertisementSchema = SchemaFactory.createForClass(Advertisement);
