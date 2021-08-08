@@ -37,23 +37,8 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
-    return req.user;
-  }
-
-  //bütün userları getir
-  @UseGuards(JwtAuthGuard)
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
-  }
-
-  //profili ilk kez gönder
-  @UseGuards(JwtAuthGuard)
-  @Post()
-  @FormDataRequest()
-  postProfile(@Request() req, @Body() updateUserDto: UpdateUserDto): any {
-    const id = req.user.user._id;
-    return this.usersService.updateProfile(id, updateUserDto);
+    const userID = req.user.user._id;
+    return this.usersService.findOne(userID);
   }
 
   //profili güncelle
@@ -63,15 +48,6 @@ export class UsersController {
   updateProfile(@Request() req, @Body() updateUserDto: UpdateUserDto): any {
     const id = req.user.user._id;
     return this.usersService.updateProfile(id, updateUserDto);
-  }
-
-  //profil fotoğrafı yükle
-  @UseGuards(JwtAuthGuard)
-  @Post('photo')
-  @FormDataRequest()
-  postPhoto(@Request() req, @Body() UpdateUserDto: UpdateUserDto): any {
-    const id = req.user.user._id;
-    return this.usersService.updateProfile(id, UpdateUserDto);
   }
 
   //profil fotoğrafı güncelle

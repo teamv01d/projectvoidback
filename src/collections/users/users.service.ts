@@ -48,6 +48,6 @@ export class UsersService {
     if (!exUser) {
       throw new NotFoundException(`not found`);
     }
-    return exUser;
+    return exUser.save();
   }
 }
