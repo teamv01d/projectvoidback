@@ -59,6 +59,7 @@ export class UsersController {
     return this.usersService.updateProfile(id, UpdateUserDto);
   }
 
+  //cv güncelle
   @UseGuards(JwtAuthGuard)
   @Patch('cv')
   @FormDataRequest()

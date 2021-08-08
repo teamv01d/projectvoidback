@@ -12,7 +12,7 @@ export class UploadService {
     });
   }
 
-  async upload(file: any): Promise<any> {
+  async uploadFile(file: any): Promise<any> {
     let result;
     try {
       await cloudinary.v2.uploader.upload(

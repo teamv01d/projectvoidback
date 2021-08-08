@@ -13,7 +13,7 @@ export class ApplicantService {
 
   findUsersByApp() {
     try {
-      const usersprofiles = this.applicantModel.aggregate([
+      const usersProfiles = this.applicantModel.aggregate([
         {
           $lookup: {
             from: 'users',
@@ -23,14 +23,14 @@ export class ApplicantService {
           },
         },
       ]);
-      return usersprofiles;
+      return usersProfiles;
     } catch (error) {
       throw new NotFoundException('there is none what u looking for');
     }
   }
 
   create(createApplicantDto: CreateApplicantDto): Promise<Applicant> {
-    const createapplicant = new this.applicantModel(createApplicantDto);
-    return createapplicant.save();
+    const createApplicant = new this.applicantModel(createApplicantDto);
+    return createApplicant.save();
   }
 }
