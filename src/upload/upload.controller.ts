@@ -3,6 +3,7 @@ import {
   Post,
   UploadedFile,
   UseGuards,
+  Request,
   UseInterceptors,
   forwardRef,
   Inject,
@@ -18,12 +19,15 @@ const storageOptions = diskStorage({});
 export class UploadController {
   constructor(
     private readonly uploadService: UploadService,
+    @Inject(forwardRef(() => UsersService))
+    private usersService: UsersService,
   ) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('file', { storage: storageOptions }))
-  async uploadFile( @UploadedFile() file): Promise<any> {
-    return this.uploadService.uploadFile(file);
+  async uploadFile(@Request() req, @UploadedFile() file): Promise<any> {
+    const userCv = await this.uploadService.uploadFile(file);
+    return this.usersService.updateProfile(req.user.user._id, {...req.user.user, cvUrl: userCv });
   }
 }

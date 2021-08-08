@@ -19,13 +19,44 @@ export class ApplicantService {
             from: 'users',
             localField: 'userID',
             foreignField: '_id',
-            as: 'usersprofile',
+            as: 'usersProfile',
           },
         },
       ]);
       return usersProfiles;
     } catch (error) {
       throw new NotFoundException('there is none what u looking for');
+    }
+  }
+
+  findAppByUser() {
+    try {
+      const userApplications = this.applicantModel.aggregate([
+        {
+          $match: {
+            
+          }
+        },
+        {
+          $group: {
+            _id: '$userID',
+            applications: {
+              $push: '$advertisementID',
+            },
+          },
+        },
+        {
+          $lookup: {
+            from: 'advertisements',
+            localField: 'advertisementID',
+            foreignField: '_id',
+            as: 'basvurularim',
+          },
+        },
+      ]);
+      return userApplications;
+    } catch (error) {
+      throw new NotFoundException('');
     }
   }
 

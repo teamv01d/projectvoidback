@@ -39,7 +39,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsOptional()
-  readonly cv: string;
+  readonly cvUrl: string;
 
   @IsBoolean()
   @IsOptional()

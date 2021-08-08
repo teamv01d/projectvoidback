@@ -37,7 +37,7 @@ export class Users extends Document {
   phone: string;
 
   @Prop({ default: null })
-  cv: string;
+  cvUrl: string;
 
   @Prop({ default: true })
   role: boolean;
