@@ -12,11 +12,11 @@ export class AdvertisementService {
   ) {}
 
   findAll(): Promise<Advertisement[]> {
-    return this.advertisementModel.find().exec();
+    return this.advertisementModel.find().populate('companyID').exec();
   }
 
   async findOne(id: string): Promise<Advertisement[]> {
-    const advertisement = await this.advertisementModel.find({ _id: id }).exec();
+    const advertisement = await this.advertisementModel.find({ _id: id }).populate('companyID').exec();
     if (!advertisement) {
       throw new NotFoundException(`Advertisement ${id} not found`);
     }
