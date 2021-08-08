@@ -3,8 +3,8 @@ import { Document, isValidObjectId, ObjectId } from 'mongoose';
 
 @Schema()
 export class Advertisement extends Document {
-  @Prop({ default: null, type: isValidObjectId })
-  userID: ObjectId;
+  @Prop({ type: isValidObjectId })
+  companyID: ObjectId;
 
   @Prop()
   advertisement_name: string;
@@ -20,7 +20,6 @@ export class Advertisement extends Document {
 
   @Prop({ default: null })
   city: string;
-
 }
 
 export const AdvertisementSchema = SchemaFactory.createForClass(Advertisement);
