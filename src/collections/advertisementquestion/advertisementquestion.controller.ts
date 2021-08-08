@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Request,
   UseGuards,
@@ -18,8 +19,7 @@ export class AdvertisementQuestionController {
 
   @UseGuards(JwtAuthGuard)
   @Post('create')
-  register(
-    @Request() req,
+  createQuestion(
     @Body() createAdvertisementQuestionDto: CreateAdvertisementQuestionDto,
   ) {
     return this.advertisementQuestionService.create(

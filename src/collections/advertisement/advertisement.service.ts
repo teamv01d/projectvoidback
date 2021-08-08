@@ -11,29 +11,9 @@ export class AdvertisementService {
     private readonly advertisementModel: Model<Advertisement>,
   ) {}
 
-  findAll(role: boolean) {
+  findAll() {
     try {
-      if (role == false) {
-        const allAdv = this.advertisementModel.aggregate([
-          {
-            $lookup: {
-              from: 'users',
-              localField: 'companyID',
-              foreignField: '_id',
-              as: 'profile',
-            },
-          },
-        ]);
-        return allAdv;
-      }
-    } catch (error) {
-      throw new NotFoundException('there is none what u looking for');
-    }
-  }
-
-  findOneAdv(id: string) {
-    try {
-      const oneAdv = this.advertisementModel.aggregate([
+      const allAdv = this.advertisementModel.aggregate([
         {
           $lookup: {
             from: 'users',
@@ -43,7 +23,7 @@ export class AdvertisementService {
           },
         },
       ]);
-      return oneAdv;
+      return allAdv;
     } catch (error) {
       throw new NotFoundException('there is none what u looking for');
     }

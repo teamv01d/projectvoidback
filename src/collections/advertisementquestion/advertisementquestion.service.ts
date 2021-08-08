@@ -8,7 +8,8 @@ import { UpdateAdvertisementQuestionDto } from './dto/update-advertisementquesti
 @Injectable()
 export class AdvertisementQuestionService {
   constructor(
-    @InjectModel(AdvertisementQuestion.name) private readonly advertisementQuestionModel: Model<AdvertisementQuestion>,
+    @InjectModel(AdvertisementQuestion.name)
+    private readonly advertisementQuestionModel: Model<AdvertisementQuestion>,
   ) {}
 
   findAll(): Promise<AdvertisementQuestion[]> {
@@ -16,34 +17,38 @@ export class AdvertisementQuestionService {
   }
 
   async findOne(id: string): Promise<AdvertisementQuestion[]> {
-    const advertisementq = await this.advertisementQuestionModel.find({ _id: id }).exec();
+    const advertisementq = await this.advertisementQuestionModel
+      .find({ _id: id })
+      .exec();
     if (!advertisementq) {
       throw new NotFoundException(`Advertisement question ${id} not found`);
     }
     return advertisementq;
   }
 
-  async create(createAdvertisementQuestionDTO: CreateAdvertisementQuestionDto): Promise<AdvertisementQuestion> {
-   const createadvertisementq = new this.advertisementQuestionModel(createAdvertisementQuestionDTO); 
+  async create(
+    createAdvertisementQuestionDTO: CreateAdvertisementQuestionDto,
+  ): Promise<AdvertisementQuestion> {
+    const createadvertisementq = new this.advertisementQuestionModel(
+      createAdvertisementQuestionDTO,
+    );
     return await createadvertisementq.save();
   }
 
-  async updateAdvertisementQuestion(id: string, updateAdvertisementQuestionDto: UpdateAdvertisementQuestionDto,): Promise<AdvertisementQuestion | undefined> {
+  async updateAdvertisementQuestion(
+    id: string,
+    updateAdvertisementQuestionDto: UpdateAdvertisementQuestionDto,
+  ): Promise<AdvertisementQuestion | undefined> {
     const exAdvertisementQuestion = await this.advertisementQuestionModel
-      .findOneAndUpdate({ _id: id }, { $set: updateAdvertisementQuestionDto }, { new: true })
+      .findOneAndUpdate(
+        { _id: id },
+        { $set: updateAdvertisementQuestionDto },
+        { new: true },
+      )
       .exec();
     if (!exAdvertisementQuestion) {
       throw new NotFoundException(`not found`);
     }
     return exAdvertisementQuestion;
-  }
-
-  async delete(id: string): Promise<AdvertisementQuestion> {
-    try {
-      const advertisementq = await this.advertisementQuestionModel.findOne({ _id: id });
-      return advertisementq.deleteOne();
-    } catch (error) {
-      throw new NotFoundException(`Advertisement question ${id} cant delete cause there is none`);
-    }
   }
 }

@@ -8,10 +8,22 @@ import { UpdateAptitudeTestQuestionDto } from './dto/update-aptitudetestquestion
 @Injectable()
 export class AptitudeTestQuestionService {
   constructor(
-    @InjectModel(AptitudeTestQuestion.name) private readonly aptitudeTestQuestionModel: Model<AptitudeTestQuestion>,
+    @InjectModel(AptitudeTestQuestion.name)
+    private readonly aptitudeTestQuestionModel: Model<AptitudeTestQuestion>,
   ) {}
 
   findAll(): Promise<AptitudeTestQuestion[]> {
     return this.aptitudeTestQuestionModel.find().exec();
+  }
+
+  findBySubject(subject: string) {
+    try {
+      const questionSubject = this.aptitudeTestQuestionModel.aggregate([
+        {
+          $match: { status: subject },
+        },
+      ]);
+      return questionSubject;
+    } catch (error) {}
   }
 }

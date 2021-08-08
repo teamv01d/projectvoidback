@@ -19,19 +19,22 @@ export class AdvertisementController {
 
   @UseGuards(JwtAuthGuard)
   @Post('create')
-  register(@Body() createAdvertisementDto: CreateAdvertisementDto) {
-    return this.advertisementService.create(createAdvertisementDto);
+  createAdv(@Request() req, @Body() body: CreateAdvertisementDto) {
+    return this.advertisementService.create({
+      ...body,
+      companyID: req.user.user._id,
+    });
   }
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll(@Request() req) {
-    return this.advertisementService.findAll(req.user.user.role);
+  findAll() {
+    return this.advertisementService.findAll();
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('one')
-  findOne(@Param() id:string) {
+  findOne(@Param() id: string) {
     return this.advertisementService.findOne(id);
   }
 }

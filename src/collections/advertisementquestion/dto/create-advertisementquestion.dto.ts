@@ -2,8 +2,10 @@ import { IsOptional, IsString } from 'class-validator';
 import { ObjectId } from 'mongoose';
 
 export class CreateAdvertisementQuestionDto {
-  @IsOptional()
-  readonly advertisementID: ObjectId;
+  advertisementID: ObjectId;
+
+  @IsString()
+  subject: string;
 
   @IsString()
   question: string;
