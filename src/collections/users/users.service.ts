@@ -5,6 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Users } from 'src/entities/users.entity';
 import { CreateCompanyDto } from './dto/create-company.dto';
+import { UpdateCompanyDto } from './dto/update-company.dto';
 
 @Injectable()
 export class UsersService {
@@ -44,6 +45,19 @@ export class UsersService {
   ): Promise<Users | undefined> {
     const exUser = await this.usersModel
       .findByIdAndUpdate(id, { $set: updateUserDto }, { new: true })
+      .exec();
+    if (!exUser) {
+      throw new NotFoundException(`not found`);
+    }
+    return exUser.save();
+  }
+
+  async updateComProfile(
+    id: string,
+    updateCompanyDto: UpdateCompanyDto,
+  ): Promise<Users | undefined> {
+    const exUser = await this.usersModel
+      .findByIdAndUpdate(id, { $set: updateCompanyDto }, { new: true })
       .exec();
     if (!exUser) {
       throw new NotFoundException(`not found`);

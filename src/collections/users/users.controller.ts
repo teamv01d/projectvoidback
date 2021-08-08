@@ -11,6 +11,7 @@ import { FormDataRequest } from 'nestjs-form-data';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateCompanyDto } from './dto/update-company.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 
@@ -41,6 +42,13 @@ export class UsersController {
     return this.usersService.findOne(userID);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getcompanyProfile(@Request() req) {
+    const companyID = req.user.user._id;
+    return this.usersService.findOne(companyID);
+  }
+
   //profili güncelle
   @UseGuards(JwtAuthGuard)
   @Patch()
@@ -50,6 +58,17 @@ export class UsersController {
     return this.usersService.updateProfile(id, updateUserDto);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Patch('company')
+  @FormDataRequest()
+  updateCompanyProfile(
+    @Request() req,
+    @Body() updateCompanyDto: UpdateCompanyDto,
+  ): any {
+    const id = req.user.user._id;
+    return this.usersService.updateComProfile(id, updateCompanyDto);
+  }
+
   //profil fotoğrafı güncelle
   @UseGuards(JwtAuthGuard)
   @Patch('photo')
@@ -57,6 +76,17 @@ export class UsersController {
   patchPhoto(@Request() req, @Body() UpdateUserDto: UpdateUserDto): any {
     const id = req.user.user._id;
     return this.usersService.updateProfile(id, UpdateUserDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('company/photo')
+  @FormDataRequest()
+  patchCompanyPhoto(
+    @Request() req,
+    @Body() updateCompanyDto: UpdateCompanyDto,
+  ): any {
+    const id = req.user.user._id;
+    return this.usersService.updateComProfile(id, updateCompanyDto);
   }
 
   //cv güncelle

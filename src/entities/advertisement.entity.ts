@@ -3,9 +3,6 @@ import { Document, isValidObjectId, ObjectId } from 'mongoose';
 
 @Schema()
 export class Advertisement extends Document {
-  @Prop({ default: null, type: isValidObjectId })
-  userID: ObjectId;
-
   @Prop()
   advertisement_name: string;
 

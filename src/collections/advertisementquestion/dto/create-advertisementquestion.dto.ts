@@ -1,8 +1,9 @@
-import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator';
-
+import { IsOptional, IsString } from 'class-validator';
+import { ObjectId } from 'mongoose';
 
 export class CreateAdvertisementQuestionDto {
-  
+  @IsOptional()
+  readonly advertisementID: ObjectId;
 
   @IsString()
   question: string;
@@ -21,5 +22,4 @@ export class CreateAdvertisementQuestionDto {
 
   @IsString()
   answer: string;
-
 }

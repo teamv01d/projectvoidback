@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Request,
   UseGuards,
@@ -24,13 +25,13 @@ export class AdvertisementController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.advertisementService.findAll();
+  findAll(@Request() req) {
+    return this.advertisementService.findAll(req.user.user.role);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('one')
-  findOne(@Request() req) {
-    return this.advertisementService.findOne(req._id);
+  findOne(@Param() id:string) {
+    return this.advertisementService.findOne(id);
   }
 }
