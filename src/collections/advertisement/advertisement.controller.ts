@@ -18,6 +18,7 @@ export class AdvertisementController {
   constructor(private readonly advertisementService: AdvertisementService) {}
 
   @UseGuards(JwtAuthGuard)
+  @FormDataRequest()
   @Post('create')
   createAdv(@Request() req, @Body() body: CreateAdvertisementDto) {
     return this.advertisementService.create({

@@ -7,6 +7,7 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
+import { FormDataRequest } from 'nestjs-form-data';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { AdvertisementQuestionService } from './advertisementquestion.service';
 import { CreateAdvertisementQuestionDto } from './dto/create-advertisementquestion.dto';
@@ -19,6 +20,7 @@ export class AdvertisementQuestionController {
 
   @UseGuards(JwtAuthGuard)
   @Post('create')
+  @FormDataRequest()
   createQuestion(
     @Body() createAdvertisementQuestionDto: CreateAdvertisementQuestionDto,
   ) {
