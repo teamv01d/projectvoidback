@@ -26,4 +26,9 @@ export class ApplicantController {
   getAppUsers() {
     return this.applicantService.findUsersByApp();
   }
+
+  @Get('userapps')
+  getUsersApp() {
+    
+  }
 }
