@@ -10,6 +10,7 @@ import {
 import { CreateAdvertisementDto } from './dto/create-advertisement.dto';
 import { AdvertisementService } from './advertisement.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { FormDataRequest } from 'nestjs-form-data';
 
 //return yanında kullanılması gereken tırnak işareti `
 
@@ -19,6 +20,7 @@ export class AdvertisementController {
 
   @UseGuards(JwtAuthGuard)
   @Post('create')
+  @FormDataRequest()
   createAdv(@Request() req, @Body() body: CreateAdvertisementDto) {
     return this.advertisementService.create({
       ...body,

@@ -5,11 +5,9 @@ export class CreateAdvertisementDto {
   companyID: ObjectId;
 
   @IsString()
-  @IsOptional()
   readonly advertisement_name: string;
 
   @IsString()
-  @IsOptional()
   readonly explanation: string;
 
   @IsString()
@@ -17,10 +15,8 @@ export class CreateAdvertisementDto {
   readonly start_date: string;
 
   @IsString()
-  @IsOptional()
   readonly end_date: string;
 
   @IsString()
-  @IsOptional()
   readonly city: string;
 }

@@ -21,6 +21,11 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get()
+  findAll() {
+    return this.usersService.findAll();
+  }
+
   //user register için kullanımda
   @Post('register')
   async userRegister(@Body() createUserDto: CreateUserDto) {
@@ -77,7 +82,6 @@ export class UsersController {
     const id = req.user.user._id;
     return this.usersService.updateProfile(id, UpdateUserDto);
   }
-
 
   //cv güncelle
   @UseGuards(JwtAuthGuard)
