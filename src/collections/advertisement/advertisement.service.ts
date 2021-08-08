@@ -11,7 +11,14 @@ export class AdvertisementService {
     private readonly advertisementModel: Model<Advertisement>,
   ) {}
 
-  findAll() {
+  findAll(): Promise<Advertisement[]> {
+    return this.advertisementModel.find().populate('companyID').exec();
+  }
+
+  async findOne(id: string): Promise<Advertisement[]> {
+    const advertisement = await this.advertisementModel.find({ _id: id }).populate('companyID').exec();
+
+  findAll2() {
     try {
       const allAdv = this.advertisementModel.aggregate([
         {
@@ -29,10 +36,6 @@ export class AdvertisementService {
     }
   }
 
-  async findOne(id: string): Promise<Advertisement[]> {
-    const advertisement = await this.advertisementModel
-      .find({ _id: id })
-      .exec();
     if (!advertisement) {
       throw new NotFoundException(`Advertisement ${id} not found`);
     }

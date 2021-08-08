@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, isValidObjectId, ObjectId } from 'mongoose';
+import { Document, isValidObjectId, ObjectId, Schema as MongooseSchema } from 'mongoose';
 
 @Schema()
 export class Advertisement extends Document {
-  @Prop({ type: isValidObjectId })
-  companyID: ObjectId;
+  @Prop({ type: MongooseSchema.Types.ObjectId , ref: 'Users' })
+  userID: ObjectId;
+
 
   @Prop()
   advertisement_name: string;
@@ -20,6 +21,9 @@ export class Advertisement extends Document {
 
   @Prop({ default: null })
   city: string;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId , ref: 'Users' })
+  companyID: ObjectId;
 }
 
 export const AdvertisementSchema = SchemaFactory.createForClass(Advertisement);
