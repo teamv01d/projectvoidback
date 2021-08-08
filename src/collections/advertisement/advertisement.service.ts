@@ -15,27 +15,11 @@ export class AdvertisementService {
     return this.advertisementModel.find().populate('companyID').exec();
   }
 
-  async findOne(id: string): Promise<Advertisement[]> {
-    const advertisement = await this.advertisementModel.find({ _id: id }).populate('companyID').exec();
-
-  findAll2() {
-    try {
-      const allAdv = this.advertisementModel.aggregate([
-        {
-          $lookup: {
-            from: 'users',
-            localField: 'companyID',
-            foreignField: '_id',
-            as: 'profile',
-          },
-        },
-      ]);
-      return allAdv;
-    } catch (error) {
-      throw new NotFoundException('there is none what u looking for');
-    }
-  }
-
+  async findOne(id: string) {
+    const advertisement = await this.advertisementModel
+      .find({ _id: id })
+      .populate('companyID')
+      .exec();
     if (!advertisement) {
       throw new NotFoundException(`Advertisement ${id} not found`);
     }
@@ -45,9 +29,9 @@ export class AdvertisementService {
   async create(
     createAdvertisementDTO: CreateAdvertisementDto,
   ): Promise<Advertisement> {
-    const createadvertisement = new this.advertisementModel(
+    const createAdvertisement = new this.advertisementModel(
       createAdvertisementDTO,
     );
-    return await createadvertisement.save();
+    return await createAdvertisement.save();
   }
 }
