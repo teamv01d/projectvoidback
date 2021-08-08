@@ -27,7 +27,7 @@ export class UploadController {
   @Post()
   @UseInterceptors(FileInterceptor('file', { storage: storageOptions }))
   async uploadCv(@Request() req, @UploadedFile() file): Promise<any> {
-    const userCv = await this.uploadService.uploadFile(file);
+    const userCv = await this.uploadService.uploadCv(file);
     return this.usersService.updateProfile(req.user.user._id, {
       ...req.user.user,
       cvUrl: userCv,
@@ -38,10 +38,10 @@ export class UploadController {
   @Post('photo')
   @UseInterceptors(FileInterceptor('file', { storage: storageOptions }))
   async uploadPhoto(@Request() req, @UploadedFile() file): Promise<any> {
-    const userP = await this.uploadService.uploadFile(file);
+    const userP = await this.uploadService.uploadPhoto(file);
     return this.usersService.updateProfile(req.user.user._id, {
       ...req.user.user,
-      cvUrl: userP,
+      photo: userP,
     });
   }
 }
