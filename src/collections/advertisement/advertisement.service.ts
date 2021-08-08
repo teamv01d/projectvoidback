@@ -27,23 +27,4 @@ export class AdvertisementService {
    const createadvertisement = new this.advertisementModel(createAdvertisementDTO); 
     return await createadvertisement.save();
   }
-
-  async updateAdvertisement(id: string, updateAdvertisementDto: UpdateAdvertisementDto,): Promise<Advertisement | undefined> {
-    const exAdvertisement = await this.advertisementModel
-      .findOneAndUpdate({ _id: id }, { $set: updateAdvertisementDto }, { new: true })
-      .exec();
-    if (!exAdvertisement) {
-      throw new NotFoundException(`not found`);
-    }
-    return exAdvertisement;
-  }
-
-  async delete(id: string): Promise<Advertisement> {
-    try {
-      const advertisement = await this.advertisementModel.findOne({ _id: id });
-      return advertisement.deleteOne();
-    } catch (error) {
-      throw new NotFoundException(`Advertisement ${id} cant delete cause there is none`);
-    }
-  }
 }

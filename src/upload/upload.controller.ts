@@ -26,8 +26,22 @@ export class UploadController {
   @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('file', { storage: storageOptions }))
-  async uploadFile(@Request() req, @UploadedFile() file): Promise<any> {
+  async uploadCv(@Request() req, @UploadedFile() file): Promise<any> {
     const userCv = await this.uploadService.uploadFile(file);
-    return this.usersService.updateProfile(req.user.user._id, {...req.user.user, cvUrl: userCv });
+    return this.usersService.updateProfile(req.user.user._id, {
+      ...req.user.user,
+      cvUrl: userCv,
+    });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('photo')
+  @UseInterceptors(FileInterceptor('file', { storage: storageOptions }))
+  async uploadPhoto(@Request() req, @UploadedFile() file): Promise<any> {
+    const userP = await this.uploadService.uploadFile(file);
+    return this.usersService.updateProfile(req.user.user._id, {
+      ...req.user.user,
+      cvUrl: userP,
+    });
   }
 }
