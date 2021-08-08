@@ -5,7 +5,7 @@ import {
   Post,
   Request,
   UseGuards,
-  Put,
+  Patch,
 } from '@nestjs/common';
 import { FormDataRequest } from 'nestjs-form-data';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
@@ -43,7 +43,7 @@ export class UsersController {
 
   //profili güncelle
   @UseGuards(JwtAuthGuard)
-  @Put()
+  @Patch()
   @FormDataRequest()
   updateProfile(@Request() req, @Body() updateUserDto: UpdateUserDto): any {
     const id = req.user.user._id;
@@ -52,9 +52,17 @@ export class UsersController {
 
   //profil fotoğrafı güncelle
   @UseGuards(JwtAuthGuard)
-  @Put('photo')
+  @Patch('photo')
   @FormDataRequest()
-  putPhoto(@Request() req, @Body() UpdateUserDto: UpdateUserDto): any {
+  patchPhoto(@Request() req, @Body() UpdateUserDto: UpdateUserDto): any {
+    const id = req.user.user._id;
+    return this.usersService.updateProfile(id, UpdateUserDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('cv')
+  @FormDataRequest()
+  patchCv(@Request() req, @Body() UpdateUserDto: UpdateUserDto): any {
     const id = req.user.user._id;
     return this.usersService.updateProfile(id, UpdateUserDto);
   }
