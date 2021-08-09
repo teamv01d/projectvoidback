@@ -19,10 +19,4 @@ export class AptitudeTestQuestionController {
   findAll() {
     return this.aptitudeTestQuestionService.findAll();
   }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('mongo')
-  findJava(@Param() subject:string) {
-    return this.aptitudeTestQuestionService.findBySubject(subject);
-  }
 }

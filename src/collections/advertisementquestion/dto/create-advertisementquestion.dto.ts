@@ -1,27 +1,27 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional } from 'class-validator';
 import { ObjectId } from 'mongoose';
 
 export class CreateAdvertisementQuestionDto {
   advertisementID: ObjectId;
 
-  @IsString()
+  @IsOptional()
   subject: string;
 
-  @IsString()
+  @IsOptional()
   question: string;
 
-  @IsString()
+  @IsOptional()
   optionA: string;
 
-  @IsString()
+  @IsOptional()
   optionB: string;
 
-  @IsString()
+  @IsOptional()
   optionC: string;
 
-  @IsString()
+  @IsOptional()
   optionD: string;
 
-  @IsString()
+  @IsOptional()
   answer: string;
 }

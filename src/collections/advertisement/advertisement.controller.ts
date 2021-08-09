@@ -11,6 +11,7 @@ import { CreateAdvertisementDto } from './dto/create-advertisement.dto';
 import { AdvertisementService } from './advertisement.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { FormDataRequest } from 'nestjs-form-data';
+import { Advertisement } from 'src/entities/advertisement.entity';
 
 //return yanında kullanılması gereken tırnak işareti `
 
@@ -35,7 +36,7 @@ export class AdvertisementController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('one')
+  @Get('one/:id')
   findOne(@Param() id: string) {
     return this.advertisementService.findOne(id);
   }

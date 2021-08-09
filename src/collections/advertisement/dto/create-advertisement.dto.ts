@@ -11,8 +11,7 @@ export class CreateAdvertisementDto {
   readonly explanation: string;
 
   @IsString()
-  @IsOptional()
-  readonly start_date: string;
+  start_date: string;
 
   @IsString()
   readonly end_date: string;
