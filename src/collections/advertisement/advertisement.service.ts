@@ -1,6 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { Advertisement } from 'src/entities/advertisement.entity';
 import { CreateAdvertisementDto } from './dto/create-advertisement.dto';
 
@@ -26,11 +26,9 @@ export class AdvertisementService {
     return advertisement;
   }
 
-  async create(
-    createAdvertisementDTO: CreateAdvertisementDto,
-  ): Promise<Advertisement> {
-    const createAdvertisement = new this.advertisementModel(
-      createAdvertisementDTO,
+  async create(@Body() body: CreateAdvertisementDto): Promise<Advertisement> {
+    const createAdvertisement = new this.advertisementModel(body).populate(
+      'companyID',
     );
     return await createAdvertisement.save();
   }
