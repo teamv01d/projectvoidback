@@ -16,7 +16,7 @@ export class AdvertisementService {
   }
 
   async findOne(id: string): Promise<Advertisement | undefined> {
-    const advertisement = await this.advertisementModel.findById(id).exec();
+    const advertisement = await this.advertisementModel.findById(id).populate('companyID').exec();
     if (!advertisement) {
       throw new NotFoundException(`Advertisement ${id} not found`);
     }

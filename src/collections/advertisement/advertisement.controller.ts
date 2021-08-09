@@ -37,7 +37,8 @@ export class AdvertisementController {
 
   @UseGuards(JwtAuthGuard)
   @Get('one/:id')
-  findOne(@Param() id: string) {
-    return this.advertisementService.findOne(id);
+  findOne(@Param() id: any) {
+    const aid = id.id
+    return this.advertisementService.findOne(aid);
   }
 }
